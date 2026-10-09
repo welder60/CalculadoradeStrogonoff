@@ -93,7 +93,22 @@
         {
           "@type": "Question",
           "name": "Quanto de carne comprar para strogonoff por pessoa?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Calcule 200 g de carne ou frango por pessoa. Para 10 pessoas, são 2 kg." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Calcule 200 g de carne ou frango por pessoa. Para 10 pessoas, são 2 kg. Em festas com outros pratos, dá para reduzir para 150 g." }
+        },
+        {
+          "@type": "Question",
+          "name": "1 kg de carne serve quantas pessoas no strogonoff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "1 kg de carne ou frango rende strogonoff para 5 pessoas, contando 200 g por pessoa." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto de carne para strogonoff para 20 pessoas?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Para 20 pessoas, compre 4 kg de carne ou frango, 10 caixinhas de creme de leite de 200 g, 1 kg de batata palha e 1,6 kg de arroz cru." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto fazer de strogonoff para 50 pessoas?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Para 50 pessoas, use 10 kg de carne ou frango, 25 caixinhas de creme de leite, 2,5 kg de champignon, 4 kg de arroz cru e 2,5 kg de batata palha." }
         },
         {
           "@type": "Question",
@@ -104,6 +119,16 @@
           "@type": "Question",
           "name": "Quanto de batata palha comprar para strogonoff?",
           "acceptedAnswer": { "@type": "Answer", "text": "Cerca de 50 g por pessoa. Um pacote de 120 g serve de duas a três pessoas." }
+        },
+        {
+          "@type": "Question",
+          "name": "Strogonoff de frango ou de carne: qual sai mais barato?",
+          "acceptedAnswer": { "@type": "Answer", "text": "O de frango costuma sair mais barato, porque o quilo do peito de frango custa cerca de metade do quilo da alcatra. Troque a proteína na calculadora para ver a diferença com os preços do seu mercado." }
+        },
+        {
+          "@type": "Question",
+          "name": "Dá para congelar strogonoff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sim. Congele sem a batata palha e sem o arroz, em pote bem fechado, por até 3 meses. Ao reaquecer, mexa bem, porque o creme de leite pode separar um pouco." }
         }
       ]
     }
@@ -316,6 +341,14 @@ details.prices summary::marker { color: var(--tomato); }
 .faq summary { cursor: pointer; font-weight: 700; padding: 12px 0; }
 .faq details p { padding-bottom: 14px; color: var(--muted); max-width: 70ch; }
 
+/* ---------- Tabela de quantidades ---------- */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.qty-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .92rem; }
+.qty-table caption { text-align: left; padding: 14px 16px 4px; color: var(--muted); font-size: .85rem; }
+.qty-table th, .qty-table td { padding: 11px 16px; text-align: left; border-top: 1px solid var(--line); white-space: nowrap; }
+.qty-table thead th { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.row-btn { background: none; border: 0; padding: 0; font: 600 .95rem var(--font-body); color: var(--tomato); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
 /* ---------- Rodapé ---------- */
 .site-footer { margin-top: 40px; padding-block: 24px 32px; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: .85rem; color: var(--muted); }
 
@@ -346,6 +379,7 @@ details.prices summary::marker { color: var(--tomato); }
     <nav aria-label="Seções">
       <a href="#lista">Lista</a>
       <a href="#utensilios">Utensílios</a>
+      <a href="#tabela">Tabela</a>
       <a href="#preparo">Preparo</a>
     </nav>
   </header>
@@ -538,8 +572,33 @@ details.prices summary::marker { color: var(--tomato); }
       </ol>
     </section>
 
-    <!-- ===================== PERGUNTAS FREQUENTES ===================== -->
-    <section class="section" aria-labelledby="h-faq">
+    <!-- ===================== TABELA DE QUANTIDADES (conteúdo estático, indexável) ===================== -->
+    <section class="section" id="tabela" aria-labelledby="h-tabela">
+      <div class="section-head">
+        <h2 id="h-tabela">Tabela de quantidades por número de pessoas</h2>
+        <p>Toque no número para abrir na calculadora</p>
+      </div>
+      <div class="table-wrap">
+        <table class="qty-table num">
+          <caption>Quanto comprar para strogonoff de carne ou frango</caption>
+          <thead>
+            <tr><th scope="col">Pessoas</th><th scope="col">Carne ou frango</th><th scope="col">Creme de leite</th><th scope="col">Champignon</th><th scope="col">Arroz cru</th><th scope="col">Batata palha</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="5">5 pessoas</button></th><td>1 kg</td><td>3 caixinhas</td><td>250 g</td><td>400 g</td><td>250 g</td></tr>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="10">10 pessoas</button></th><td>2 kg</td><td>5 caixinhas</td><td>500 g</td><td>800 g</td><td>500 g</td></tr>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="20">20 pessoas</button></th><td>4 kg</td><td>10 caixinhas</td><td>1 kg</td><td>1,6 kg</td><td>1 kg</td></tr>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="30">30 pessoas</button></th><td>6 kg</td><td>15 caixinhas</td><td>1,5 kg</td><td>2,4 kg</td><td>1,5 kg</td></tr>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="50">50 pessoas</button></th><td>10 kg</td><td>25 caixinhas</td><td>2,5 kg</td><td>4 kg</td><td>2,5 kg</td></tr>
+            <tr><th scope="row"><button type="button" class="row-btn" data-n="100">100 pessoas</button></th><td>20 kg</td><td>50 caixinhas</td><td>5 kg</td><td>8 kg</td><td>5 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== PERGUNTAS FREQUENTES =====================
+         Mantenha os textos iguais aos do JSON-LD FAQPage no <head>. -->
+    <section class="section" id="faq" aria-labelledby="h-faq">
       <h2 id="h-faq">Perguntas frequentes</h2>
       <div class="faq">
         <details>
@@ -547,12 +606,32 @@ details.prices summary::marker { color: var(--tomato); }
           <p>Calcule 200 g de carne ou frango por pessoa. Para 10 pessoas, são 2 kg. Em festas com outros pratos, dá para reduzir para 150 g.</p>
         </details>
         <details>
-          <summary>Quantas caixinhas de creme de leite usar?</summary>
+          <summary>1 kg de carne serve quantas pessoas no strogonoff?</summary>
+          <p>1 kg de carne ou frango rende strogonoff para 5 pessoas, contando 200 g por pessoa.</p>
+        </details>
+        <details>
+          <summary>Quanto de carne para strogonoff para 20 pessoas?</summary>
+          <p>Para 20 pessoas, compre 4 kg de carne ou frango, 10 caixinhas de creme de leite de 200 g, 1 kg de batata palha e 1,6 kg de arroz cru.</p>
+        </details>
+        <details>
+          <summary>Quanto fazer de strogonoff para 50 pessoas?</summary>
+          <p>Para 50 pessoas, use 10 kg de carne ou frango, 25 caixinhas de creme de leite, 2,5 kg de champignon, 4 kg de arroz cru e 2,5 kg de batata palha.</p>
+        </details>
+        <details>
+          <summary>Quantas caixinhas de creme de leite usar no strogonoff?</summary>
           <p>Meia caixinha de 200 g por pessoa, ou seja, uma caixinha a cada duas pessoas.</p>
         </details>
         <details>
-          <summary>Quanto de batata palha comprar?</summary>
+          <summary>Quanto de batata palha comprar para strogonoff?</summary>
           <p>Cerca de 50 g por pessoa. Um pacote de 120 g serve de duas a três pessoas.</p>
+        </details>
+        <details>
+          <summary>Strogonoff de frango ou de carne: qual sai mais barato?</summary>
+          <p>O de frango costuma sair mais barato, porque o quilo do peito de frango custa cerca de metade do quilo da alcatra. Troque a proteína na calculadora para ver a diferença com os preços do seu mercado.</p>
+        </details>
+        <details>
+          <summary>Dá para congelar strogonoff?</summary>
+          <p>Sim. Congele sem a batata palha e sem o arroz, em pote bem fechado, por até 3 meses. Ao reaquecer, mexa bem, porque o creme de leite pode separar um pouco.</p>
         </details>
       </div>
     </section>
@@ -562,6 +641,7 @@ details.prices summary::marker { color: var(--tomato); }
   <footer class="site-footer">
     <p>Calculadora de Strogonoff · Valores estimados com base em preços médios de supermercado. Confira os preços da sua região.</p>
     <p>Como Associado da Amazon, ganhamos com compras qualificadas.</p>
+    <p>Atualizado em <time datetime="2026-10-08">8 de outubro de 2026</time>.</p>
   </footer>
 </div>
 
@@ -729,6 +809,11 @@ elQtd.addEventListener('blur', () => { elQtd.value = pessoas; });
 $('menos').addEventListener('click', () => definirPessoas(pessoas - 1));
 $('mais').addEventListener('click', () => definirPessoas(pessoas + 1));
 document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => definirPessoas(c.dataset.n)));
+// Linhas da tabela de quantidades: abrem o número na calculadora
+document.querySelectorAll('.row-btn').forEach(b => b.addEventListener('click', () => {
+  definirPessoas(b.dataset.n);
+  document.querySelector('.people').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
 
 $('opcionais').addEventListener('change', e => {
   incluirOpcionais = e.target.checked;
