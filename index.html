@@ -480,10 +480,10 @@ details.prices summary::marker { color: var(--tomato); }
           <strong class="num" id="custo-pessoa">R$ 0,00</strong>
         </div>
         <div class="cost-row">
-          <span>Gasto com embalagens fechadas</span>
+          <span>Só o que vai na panela</span>
           <strong class="num" id="custo-embalagens">R$ 0,00</strong>
         </div>
-        <small>O primeiro valor considera só o que vai na receita. O segundo é o que sai do caixa comprando embalagens inteiras.</small>
+        <small>O total é o que sai do caixa comprando embalagens inteiras, já escolhendo os tamanhos mais econômicos. Por isso o custo por pessoa cai em grupos maiores: temperos são divididos por mais gente e embalagens grandes saem mais baratas por kg.</small>
         <div class="cost-actions">
           <button type="button" class="btn btn-light" id="copiar">Copiar lista</button>
           <a class="btn btn-ghost" id="whatsapp" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
@@ -652,22 +652,34 @@ details.prices summary::marker { color: var(--tomato); }
 /* ==========================================================
    CONFIGURAÇÃO
    ----------------------------------------------------------
-   porPessoa: gramas por pessoa (receita base)
-   preco:     preço médio em R$ por kg (editável pelo usuário)
-   emb:       tamanho da embalagem comum em gramas (null = a granel)
+   base:      gramas fixas por panela (temperos não dobram com o grupo)
+   porPessoa: gramas a mais por pessoa
+   preco:     preço médio em R$ por kg na embalagem padrão (editável)
+   embs:      embalagens à venda. fator = preço por kg relativo à padrão
+              (0.85 = 15% mais barato por kg). Sem embs = a granel.
+   O cálculo escolhe a combinação de embalagens mais barata que
+   cobre a quantidade necessária.
    ========================================================== */
 const INGREDIENTES = [
-  { id: 'carne',     nome: 'Carne (alcatra ou patinho)', porPessoa: 200, preco: 46.90, emb: null, embNome: 'no açougue',     proteina: 'carne' },
-  { id: 'frango',    nome: 'Peito de frango',            porPessoa: 200, preco: 21.90, emb: null, embNome: 'no açougue',     proteina: 'frango' },
-  { id: 'creme',     nome: 'Creme de leite',             porPessoa: 100, preco: 22.50, emb: 200,  embNome: 'caixinha de 200 g' },
-  { id: 'champ',     nome: 'Champignon fatiado',         porPessoa: 50,  preco: 79.00, emb: 100,  embNome: 'vidro de 100 g drenado' },
-  { id: 'molho',     nome: 'Molho de tomate ou ketchup', porPessoa: 30,  preco: 13.00, emb: 300,  embNome: 'sachê de 300 g' },
-  { id: 'mostarda',  nome: 'Mostarda',                   porPessoa: 15,  preco: 24.00, emb: 200,  embNome: 'frasco de 200 g' },
-  { id: 'arroz',     nome: 'Arroz branco (cru)',         porPessoa: 80,  preco: 6.20,  emb: 1000, embNome: 'pacote de 1 kg' },
-  { id: 'batata',    nome: 'Batata palha',               porPessoa: 50,  preco: 41.00, emb: 120,  embNome: 'pacote de 120 g' },
+  { id: 'carne',    nome: 'Carne (alcatra ou patinho)', base: 0,  porPessoa: 200, preco: 46.90, granel: 'no açougue', proteina: 'carne' },
+  { id: 'frango',   nome: 'Peito de frango',            base: 0,  porPessoa: 200, preco: 21.90, granel: 'no açougue', proteina: 'frango' },
+  { id: 'creme',    nome: 'Creme de leite',             base: 0,  porPessoa: 100, preco: 22.50,
+    embs: [{ g: 200, nome: 'caixinha de 200 g', fator: 1 }, { g: 1010, nome: 'caixa de 1,01 kg', fator: 0.80 }] },
+  { id: 'champ',    nome: 'Champignon fatiado',         base: 0,  porPessoa: 50,  preco: 79.00,
+    embs: [{ g: 100, nome: 'vidro de 100 g drenado', fator: 1 }, { g: 1000, nome: 'balde de 1 kg drenado', fator: 0.70 }] },
+  { id: 'molho',    nome: 'Molho de tomate ou ketchup', base: 60, porPessoa: 20,  preco: 13.00,
+    embs: [{ g: 300, nome: 'sachê de 300 g', fator: 1 }, { g: 1020, nome: 'sachê de 1,02 kg', fator: 0.80 }] },
+  { id: 'mostarda', nome: 'Mostarda',                   base: 20, porPessoa: 8,   preco: 24.00,
+    embs: [{ g: 200, nome: 'frasco de 200 g', fator: 1 }, { g: 1010, nome: 'bisnaga de 1,01 kg', fator: 0.70 }] },
+  { id: 'arroz',    nome: 'Arroz branco (cru)',         base: 0,  porPessoa: 80,  preco: 6.20,
+    embs: [{ g: 1000, nome: 'pacote de 1 kg', fator: 1 }, { g: 5000, nome: 'pacote de 5 kg', fator: 0.85 }] },
+  { id: 'batata',   nome: 'Batata palha',               base: 0,  porPessoa: 50,  preco: 41.00,
+    embs: [{ g: 120, nome: 'pacote de 120 g', fator: 1 }, { g: 400, nome: 'pacote de 400 g', fator: 0.80 }, { g: 1000, nome: 'pacote de 1 kg', fator: 0.65 }] },
   // Opcionais: entram na conta só quando o usuário marca "Incluir cebola e alho"
-  { id: 'cebola',    nome: 'Cebola',                     porPessoa: 30,  preco: 6.50,  emb: 150,  embNome: 'cebola média (~150 g)', opcional: true },
-  { id: 'alho',      nome: 'Alho',                       porPessoa: 3,   preco: 35.00, emb: 50,   embNome: 'cabeça (~50 g)',        opcional: true }
+  { id: 'cebola',   nome: 'Cebola',                     base: 100, porPessoa: 20, preco: 6.50,
+    embs: [{ g: 150, nome: 'cebola média (~150 g)', fator: 1 }], opcional: true },
+  { id: 'alho',     nome: 'Alho',                       base: 10,  porPessoa: 2,  preco: 35.00,
+    embs: [{ g: 50, nome: 'cabeça (~50 g)', fator: 1 }], opcional: true }
 ];
 const MIN = 1, MAX = 100;
 const STORAGE_KEY = 'calc-strogonoff-precos-v1';
@@ -736,35 +748,57 @@ function montarPrecos() {
   }
 }
 
+/* ---------- Quantidade necessária ---------- */
+function gramasDe(ing, n) { return ing.base + ing.porPessoa * n; }
+
+/* ---------- Combinação de embalagens mais barata que cobre `g` ---------- */
+function melhorCompra(ing, g) {
+  if (!ing.embs) return { custo: g / 1000 * precos[ing.id], gramas: g, itens: [] };
+  const opcs = [...ing.embs].sort((x, y) => y.g - x.g);
+  const preco = e => e.g / 1000 * precos[ing.id] * e.fator;
+  let melhor = null;
+  (function busca(i, falta, custo, itens) {
+    if (melhor && custo >= melhor.custo) return;
+    if (falta <= 0) { melhor = { custo, itens: itens.slice() }; return; }
+    if (i >= opcs.length) return;
+    const e = opcs[i], max = Math.ceil(falta / e.g);
+    for (let k = max; k >= 0; k--) {
+      if (k) itens.push({ e, n: k });
+      busca(i + 1, falta - k * e.g, custo + k * preco(e), itens);
+      if (k) itens.pop();
+    }
+  })(0, g, 0, []);
+  melhor.gramas = melhor.itens.reduce((t, it) => t + it.n * it.e.g, 0);
+  return melhor;
+}
+
+function descreverCompra(ing, g, compra) {
+  if (!ing.embs) return `Peça ${formatarPeso(g)} ${ing.granel}`;
+  const partes = compra.itens.map(it => `${it.n} × ${it.e.nome}`).join(' + ');
+  const sobra = compra.gramas - g;
+  return sobra >= 1 ? `${partes} · sobra ${formatarPeso(sobra)}` : partes;
+}
+
 /* ---------- Cálculo principal ---------- */
 function calcular() {
-  let total = 0, totalEmb = 0, pesoTotal = 0;
+  let totalCompra = 0, totalReceita = 0, pesoTotal = 0;
 
   for (const ing of ativos()) {
-    const gramas = ing.porPessoa * pessoas;
-    const custo = gramas / 1000 * precos[ing.id];
-    total += custo;
+    const gramas = gramasDe(ing, pessoas);
+    const compra = melhorCompra(ing, gramas);
+    totalCompra += compra.custo;
+    // custo proporcional ao que vai na panela, ao preço das embalagens escolhidas
+    totalReceita += compra.gramas ? compra.custo * gramas / compra.gramas : 0;
     pesoTotal += gramas;
 
-    // Embalagens inteiras a comprar (ou peso exato no açougue)
-    let pack;
-    if (ing.emb) {
-      const n = Math.ceil(gramas / ing.emb);
-      totalEmb += n * ing.emb / 1000 * precos[ing.id];
-      pack = `${n} × ${ing.embNome}`;
-    } else {
-      totalEmb += custo;
-      pack = `Peça ${formatarPeso(gramas)} ${ing.embNome}`;
-    }
-
     document.querySelector(`[data-qtd="${ing.id}"]`).textContent = formatarPeso(gramas);
-    document.querySelector(`[data-custo="${ing.id}"]`).textContent = brl.format(custo);
-    document.querySelector(`[data-pack="${ing.id}"]`).textContent = pack;
+    document.querySelector(`[data-custo="${ing.id}"]`).textContent = brl.format(compra.custo);
+    document.querySelector(`[data-pack="${ing.id}"]`).textContent = descreverCompra(ing, gramas, compra);
   }
 
-  $('custo-total').textContent = brl.format(total);
-  $('custo-pessoa').textContent = brl.format(total / pessoas);
-  $('custo-embalagens').textContent = brl.format(totalEmb);
+  $('custo-total').textContent = brl.format(totalCompra);
+  $('custo-pessoa').textContent = brl.format(totalCompra / pessoas);
+  $('custo-embalagens').textContent = brl.format(totalReceita);
   $('custo-legenda').textContent = `para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}`;
   $('peso-total').textContent = `${formatarPeso(pesoTotal)} de ingredientes no total`;
 
@@ -788,8 +822,8 @@ function definirPessoas(n, origem) {
 /* ---------- Texto para copiar/compartilhar ---------- */
 function textoLista() {
   const linhas = ativos().map(i => {
-    const g = i.porPessoa * pessoas;
-    const extra = i.emb ? ` (${Math.ceil(g / i.emb)} × ${i.embNome})` : '';
+    const g = gramasDe(i, pessoas);
+    const extra = i.embs ? ` (${melhorCompra(i, g).itens.map(it => `${it.n} × ${it.e.nome}`).join(' + ')})` : '';
     return `☐ ${i.nome}: ${formatarPeso(g)}${extra}`;
   });
   return `🛒 Strogonoff para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}\n\n${linhas.join('\n')}\n\nCusto estimado: ${$('custo-total').textContent} (${$('custo-pessoa').textContent} por pessoa)`;
