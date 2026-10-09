@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calculadoradestrogonoff.com.br/sitemap.xml
