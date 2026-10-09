@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- ============================================================
+     SEO: título, descrição, canonical e Open Graph
+     ============================================================ -->
+<title>Calculadora de Strogonoff - Quantidades e Preços exatos</title>
+<meta name="description" content="Não sabe quanto de carne comprar para o strogonoff? Use nossa calculadora online gratuita e descubra a quantidade e o custo exato por pessoa!">
+<meta name="keywords" content="calculadora de strogonoff, strogonoff para quantas pessoas, quanto de carne para strogonoff, strogonoff de frango, lista de compras strogonoff">
+<link rel="canonical" href="https://calculadoradestrogonoff.com.br/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#c8452e">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Calculadora de Strogonoff - Quantidades e Preços exatos">
+<meta property="og:description" content="Descubra quanto comprar de carne, creme de leite e batata palha para qualquer número de pessoas, com custo total e por pessoa.">
+<meta property="og:url" content="https://calculadoradestrogonoff.com.br/">
+<meta name="twitter:card" content="summary">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+
+<!-- ============================================================
+     Dados estruturados (Schema.org) — Recipe + WebApplication + FAQ
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Calculadora de Strogonoff",
+      "url": "https://calculadoradestrogonoff.com.br/",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Qualquer navegador",
+      "inLanguage": "pt-BR",
+      "description": "Calcula a quantidade de ingredientes e o custo de um strogonoff de carne ou frango para 1 a 100 pessoas.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" }
+    },
+    {
+      "@type": "Recipe",
+      "name": "Strogonoff de carne ou frango (receita base por pessoa)",
+      "description": "Receita base de strogonoff com proporções por pessoa, escalável para qualquer quantidade de convidados.",
+      "recipeCategory": "Prato principal",
+      "recipeCuisine": "Brasileira",
+      "keywords": "strogonoff, strogonoff de frango, strogonoff de carne, almoço de domingo",
+      "recipeYield": "1 porção",
+      "prepTime": "PT15M",
+      "cookTime": "PT25M",
+      "totalTime": "PT40M",
+      "recipeIngredient": [
+        "200 g de carne (alcatra ou patinho) ou peito de frango em tiras",
+        "100 g de creme de leite (meia caixinha)",
+        "50 g de champignon fatiado",
+        "30 g de molho de tomate ou ketchup",
+        "15 g de mostarda",
+        "80 g de arroz cru",
+        "50 g de batata palha",
+        "30 g de cebola picada (opcional)",
+        "3 g de alho picado (opcional)"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Corte a carne ou o frango em tiras finas e tempere com sal e pimenta." },
+        { "@type": "HowToStep", "text": "Doure a proteína em panela bem quente, em levas, para não soltar água." },
+        { "@type": "HowToStep", "text": "Se for usar, refogue a cebola e o alho na mesma panela até murcharem e volte com a carne." },
+        { "@type": "HowToStep", "text": "Junte o champignon, o molho de tomate (ou ketchup) e a mostarda e cozinhe por 5 minutos." },
+        { "@type": "HowToStep", "text": "Desligue o fogo, acrescente o creme de leite e misture sem deixar ferver." },
+        { "@type": "HowToStep", "text": "Sirva com arroz branco e batata palha por cima." }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quanto de carne comprar para strogonoff por pessoa?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Calcule 200 g de carne ou frango por pessoa. Para 10 pessoas, são 2 kg." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quantas caixinhas de creme de leite usar no strogonoff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Meia caixinha de 200 g por pessoa, ou seja, uma caixinha a cada duas pessoas." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto de batata palha comprar para strogonoff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Cerca de 50 g por pessoa. Um pacote de 120 g serve de duas a três pessoas." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+/* Layout: coluna única mobile-first; a partir de 860px a calculadora fica à esquerda e o resumo de custo fixo à direita. */
+:root {
+  --bg: #fbf5ec;          /* creme */
+  --surface: #ffffff;     /* branco dos cartões */
+  --ink: #2c1b14;         /* marrom-café para texto */
+  --muted: #7b6558;
+  --line: #eadccb;
+  --tomato: #c8452e;      /* vermelho suave, cor de molho */
+  --tomato-soft: #f8e1d9;
+  --mustard: #d99a1b;     /* mostarda */
+  --mustard-soft: #fbefd3;
+  --amazon: #ff9900;      /* botão de afiliado */
+  --amazon-hover: #f08700;
+  --amazon-ink: #111111;
+  --done: #a8968a;
+
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1411; --surface: #261c17; --ink: #f6ebe0; --muted: #b8a393; --line: #3b2c24;
+    --tomato: #ea7a62; --tomato-soft: #3d221b; --mustard: #f0b947; --mustard-soft: #3a2c14;
+    --done: #7d6b60; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1411; --surface: #261c17; --ink: #f6ebe0; --muted: #b8a393; --line: #3b2c24;
+  --tomato: #ea7a62; --tomato-soft: #3d221b; --mustard: #f0b947; --mustard-soft: #3a2c14;
+  --done: #7d6b60; color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1rem/1.55 var(--font-body);
+  padding: env(safe-area-inset-top, 0px) 16px env(safe-area-inset-bottom, 0px);
+}
+img, svg { max-width: 100%; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0; }
+a { color: var(--tomato); }
+:focus-visible { outline: 3px solid var(--mustard); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tomato); }
+
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+/* ---------- Cabeçalho ---------- */
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 18px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-size: 1.15rem; }
+.brand svg { flex: none; }
+.site-header nav { display: flex; gap: 16px; font-size: .9rem; font-weight: 600; }
+.site-header nav a { color: var(--muted); text-decoration: none; }
+.site-header nav a:hover { color: var(--tomato); }
+@media (max-width: 520px) { .site-header nav { display: none; } }
+
+/* ---------- Hero / calculadora ---------- */
+.hero { display: grid; gap: 14px; padding-block: 8px 24px; }
+.hero h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
+.hero h1 span { color: var(--tomato); }
+.lede { color: var(--muted); max-width: 58ch; font-size: 1.05rem; }
+
+.layout { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+  .cost { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+}
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+
+/* Seletor de pessoas */
+.people { display: grid; gap: 16px; }
+.people-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.people label { font-weight: 600; }
+.people-count { display: flex; align-items: baseline; gap: 8px; }
+.people-count input {
+  width: 3.4ch; font: 400 3rem/1 var(--font-display); color: var(--tomato);
+  background: transparent; border: 0; border-bottom: 2px dashed var(--line); text-align: center; padding: 0;
+  -moz-appearance: textfield;
+}
+.people-count input::-webkit-outer-spin-button, .people-count input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.people-count span { color: var(--muted); font-weight: 500; }
+.stepper { display: flex; gap: 8px; }
+.stepper button {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg);
+  color: var(--ink); font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+.stepper button:hover { border-color: var(--tomato); color: var(--tomato); }
+
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 99px;
+  background: linear-gradient(to right, var(--tomato) 0 var(--fill, 10%), var(--line) var(--fill, 10%) 100%);
+}
+input[type="range"]::-moz-range-track { height: 8px; border-radius: 99px; background: var(--line); }
+input[type="range"]::-moz-range-progress { height: 8px; border-radius: 99px; background: var(--tomato); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 28px; height: 28px; margin-top: -10px; border-radius: 50%;
+  background: var(--surface); border: 4px solid var(--tomato); box-shadow: 0 2px 6px rgba(0,0,0,.18);
+}
+input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--surface); border: 4px solid var(--tomato); }
+.range-scale { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); margin-top: -6px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 99px;
+  padding: 7px 14px; font: 600 .875rem var(--font-body); cursor: pointer; min-height: 36px;
+}
+.chip:hover { border-color: var(--tomato); }
+.chip[aria-pressed="true"] { background: var(--tomato); border-color: var(--tomato); color: #fff; }
+
+.protein { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.protein input { position: absolute; opacity: 0; pointer-events: none; }
+.protein label { text-align: center; padding: 11px 8px; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--muted); }
+.protein input:checked + label { background: var(--mustard-soft); color: var(--ink); box-shadow: inset 0 -3px 0 var(--mustard); }
+.protein input:focus-visible + label { outline: 3px solid var(--mustard); outline-offset: -3px; }
+.protein legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.toggle { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
+.toggle input { width: 22px; height: 22px; accent-color: var(--tomato); margin: 0; cursor: pointer; flex: none; }
+.toggle small { font-weight: 400; color: var(--muted); }
+.opt { font-style: normal; font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--mustard); background: var(--mustard-soft); border-radius: 99px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
+
+/* ---------- Custo ---------- */
+.cost { display: grid; gap: 16px; background: var(--tomato); color: #fff; border: 0; }
+.cost h2 { font-size: 1.15rem; color: #fff; opacity: .92; }
+.cost-total { font: 400 clamp(2.4rem, 9vw, 3rem)/1 var(--font-display); }
+.cost-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.4); }
+.cost-row strong { font-size: 1.35rem; font-family: var(--font-display); font-weight: 400; }
+.cost small { opacity: .85; font-size: .8rem; }
+.cost-actions { display: grid; gap: 8px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  border-radius: 10px; padding: 10px 16px; font: 700 .95rem var(--font-body); cursor: pointer; text-decoration: none; border: 0;
+}
+.btn-light { background: #fff; color: #8f2b1a; }
+.btn-light:hover { background: #fff3ee; }
+.btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.7); }
+.btn-ghost:hover { background: rgba(255,255,255,.12); }
+
+/* ---------- Lista de compras ---------- */
+.section { display: grid; gap: 14px; padding-block: 28px 4px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.section-head p { color: var(--muted); font-size: .9rem; }
+
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; }
+.checklist li + li { border-top: 1px dashed var(--line); }
+.item { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 4px; cursor: pointer; }
+.item input { width: 22px; height: 22px; accent-color: var(--tomato); cursor: pointer; margin: 0; }
+.item-name { font-weight: 600; }
+.item-pack { display: block; font-size: .82rem; color: var(--muted); font-weight: 400; }
+.item-qty { text-align: right; }
+.item-qty b { display: block; font: 400 1.2rem var(--font-display); color: var(--tomato); }
+.item-qty span { font-size: .8rem; color: var(--muted); }
+.item:has(input:checked) .item-name,
+.item:has(input:checked) .item-qty b { text-decoration: line-through; color: var(--done); }
+.list-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 12px; border-top: 2px solid var(--line); font-size: .9rem; color: var(--muted); }
+.link-btn { background: none; border: 0; color: var(--tomato); font: 600 .9rem var(--font-body); cursor: pointer; padding: 4px 0; }
+
+/* Editor de preços */
+details.prices { margin-top: 14px; }
+details.prices summary { cursor: pointer; font-weight: 700; color: var(--ink); padding: 6px 0; }
+details.prices summary::marker { color: var(--tomato); }
+.price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 12px; }
+.price-grid label { display: grid; gap: 4px; font-size: .85rem; color: var(--muted); }
+.price-field { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 0 10px; }
+.price-field span { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+.price-field input { width: 100%; min-width: 0; border: 0; background: transparent; color: var(--ink); font: 600 1rem var(--font-body); padding: 10px 6px; }
+.price-note { font-size: .8rem; color: var(--muted); margin-top: 10px; }
+
+/* ---------- Afiliados ---------- */
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.product { display: grid; grid-template-rows: auto 1fr auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; }
+.product:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(60, 30, 15, .12); }
+.product-img { aspect-ratio: 4 / 3; max-width: 100%; background: var(--mustard-soft); display: grid; place-items: center; }
+.product-img svg { width: 46%; height: auto; }
+.product-body { display: grid; align-content: start; gap: 6px; padding: 16px 16px 4px; }
+.product-tag { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mustard); }
+.product-body p { font-size: .9rem; color: var(--muted); }
+.product-cta { padding: 14px 16px 16px; }
+.btn-amazon { width: 100%; background: var(--amazon); color: var(--amazon-ink); box-shadow: 0 2px 0 #c77700; transition: background .15s, transform .1s; }
+.btn-amazon:hover { background: var(--amazon-hover); }
+.btn-amazon:active { transform: translateY(2px); box-shadow: none; }
+.disclosure { font-size: .8rem; color: var(--muted); }
+
+/* ---------- Preparo e FAQ ---------- */
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; max-width: 70ch; }
+.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--tomato-soft); color: var(--tomato); font: 400 1rem var(--font-display); }
+.faq { display: grid; gap: 10px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; }
+.faq summary { cursor: pointer; font-weight: 700; padding: 12px 0; }
+.faq details p { padding-bottom: 14px; color: var(--muted); max-width: 70ch; }
+
+/* ---------- Rodapé ---------- */
+.site-footer { margin-top: 40px; padding-block: 24px 32px; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: .85rem; color: var(--muted); }
+
+/* Toast de confirmação */
+.toast {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 600; font-size: .9rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25); z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="site-header">
+    <a class="brand" href="#">
+      <!-- Ícone: panela vista de lado -->
+      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 20h36v12a10 10 0 0 1-10 10H16A10 10 0 0 1 6 32z" fill="var(--tomato)"/>
+        <rect x="2" y="20" width="44" height="5" rx="2.5" fill="var(--ink)"/>
+        <path d="M17 14c0-3 3-3 3-6M24 14c0-3 3-3 3-6M31 14c0-3 3-3 3-6" stroke="var(--mustard)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      Calculadora de Strogonoff
+    </a>
+    <nav aria-label="Seções">
+      <a href="#lista">Lista</a>
+      <a href="#utensilios">Utensílios</a>
+      <a href="#preparo">Preparo</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" aria-labelledby="titulo">
+      <p class="eyebrow">Ferramenta gratuita · 1 a 100 pessoas</p>
+      <h1 id="titulo">Calculadora de <span>Strogonoff</span></h1>
+      <p class="lede">Escolha quantas pessoas vão comer e veja na hora quanto comprar de cada ingrediente e quanto vai gastar. Base de 200 g de carne e meia caixinha de creme de leite por pessoa.</p>
+    </section>
+
+    <div class="layout">
+      <div>
+        <!-- ===================== CALCULADORA ===================== -->
+        <section class="panel people" aria-label="Quantidade de pessoas">
+          <div class="people-top">
+            <div>
+              <label for="qtd">Quantas pessoas?</label>
+              <div class="people-count">
+                <input id="qtd" class="num" type="number" inputmode="numeric" min="1" max="100" value="10" aria-describedby="qtd-help">
+                <span>pessoas</span>
+              </div>
+            </div>
+            <div class="stepper">
+              <button type="button" id="menos" aria-label="Diminuir uma pessoa">−</button>
+              <button type="button" id="mais" aria-label="Aumentar uma pessoa">+</button>
+            </div>
+          </div>
+
+          <div>
+            <input id="slider" type="range" min="1" max="100" value="10" aria-label="Número de pessoas (controle deslizante)">
+            <div class="range-scale num" aria-hidden="true"><span>1</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+          </div>
+
+          <div class="chips" role="group" aria-label="Atalhos">
+            <button type="button" class="chip" data-n="2">Casal · 2</button>
+            <button type="button" class="chip" data-n="4">Família · 4</button>
+            <button type="button" class="chip" data-n="10">Almoço · 10</button>
+            <button type="button" class="chip" data-n="30">Festa · 30</button>
+            <button type="button" class="chip" data-n="80">Evento · 80</button>
+          </div>
+          <p id="qtd-help" hidden>Digite um número de 1 a 100.</p>
+
+          <fieldset>
+            <legend>Proteína</legend>
+            <div class="protein">
+              <input type="radio" name="proteina" id="p-carne" value="carne" checked>
+              <label for="p-carne">Carne bovina</label>
+              <input type="radio" name="proteina" id="p-frango" value="frango">
+              <label for="p-frango">Frango</label>
+            </div>
+          </fieldset>
+
+          <label class="toggle" for="opcionais">
+            <input type="checkbox" id="opcionais" checked>
+            <span>Incluir cebola e alho <small>(opcionais, para refogar)</small></span>
+          </label>
+        </section>
+
+        <!-- ===================== LISTA DE COMPRAS ===================== -->
+        <section class="section" id="lista" aria-labelledby="h-lista">
+          <div class="section-head">
+            <h2 id="h-lista">Lista de Compras</h2>
+            <p>Marque o que já está no carrinho</p>
+          </div>
+          <div class="panel">
+            <ul class="checklist" id="checklist">
+              <!-- Itens gerados pelo JavaScript -->
+            </ul>
+            <div class="list-foot">
+              <span class="num" id="peso-total"></span>
+              <button type="button" class="link-btn" id="limpar">Desmarcar tudo</button>
+            </div>
+
+            <details class="prices">
+              <summary>Ajustar preços do seu mercado</summary>
+              <div class="price-grid" id="price-grid">
+                <!-- Campos de preço gerados pelo JavaScript -->
+              </div>
+              <p class="price-note">Preços médios de referência. Os valores que você editar ficam salvos neste navegador.
+                <button type="button" class="link-btn" id="reset-precos">Restaurar padrão</button></p>
+            </details>
+          </div>
+        </section>
+      </div>
+
+      <!-- ===================== CUSTO ESTIMADO ===================== -->
+      <aside class="panel cost" aria-labelledby="h-custo">
+        <h2 id="h-custo">Custo Estimado</h2>
+        <div>
+          <div class="cost-total num" id="custo-total" aria-live="polite">R$ 0,00</div>
+          <small id="custo-legenda">para 10 pessoas</small>
+        </div>
+        <div class="cost-row">
+          <span>Por pessoa</span>
+          <strong class="num" id="custo-pessoa">R$ 0,00</strong>
+        </div>
+        <div class="cost-row">
+          <span>Gasto com embalagens fechadas</span>
+          <strong class="num" id="custo-embalagens">R$ 0,00</strong>
+        </div>
+        <small>O primeiro valor considera só o que vai na receita. O segundo é o que sai do caixa comprando embalagens inteiras.</small>
+        <div class="cost-actions">
+          <button type="button" class="btn btn-light" id="copiar">Copiar lista</button>
+          <a class="btn btn-ghost" id="whatsapp" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ===================== AFILIADOS AMAZON ===================== -->
+    <!-- Troque "SEUTAG-20" pelo seu ID de afiliado da Amazon em todos os links abaixo.
+         Se preferir links diretos de produto, cole o link gerado na SiteStripe. -->
+    <section class="section" id="utensilios" aria-labelledby="h-utensilios">
+      <div class="section-head">
+        <h2 id="h-utensilios">Utensílios Recomendados</h2>
+        <p>O que facilita fazer strogonoff para muita gente</p>
+      </div>
+
+      <div class="products">
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 26h44v6c0 12-9 20-22 20S6 44 6 32z" fill="var(--tomato)"/><rect x="2" y="23" width="52" height="5" rx="2.5" fill="var(--ink)"/><rect x="50" y="24" width="12" height="3.5" rx="1.75" fill="var(--ink)"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Panela</span>
+            <h3>Panela Wok ou Caçarola Grande</h3>
+            <p>Fundo largo para dourar a carne sem amontoar e espaço de sobra para misturar o creme de leite.</p>
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-amazon" href="https://www.amazon.com.br/s?k=panela+wok+antiaderente&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener">Ver preço na Amazon</a>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="20" width="40" height="34" rx="10" fill="var(--tomato)"/><path d="M12 26a20 8 0 0 1 40 0z" fill="var(--ink)"/><rect x="28" y="10" width="8" height="8" rx="3" fill="var(--ink)"/><circle cx="32" cy="42" r="4" fill="var(--mustard)"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Acompanhamento</span>
+            <h3>Panela Elétrica de Arroz</h3>
+            <p>Arroz soltinho no ponto enquanto você cuida do molho. Prefira modelos de 10 xícaras para grupos.</p>
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-amazon" href="https://www.amazon.com.br/s?k=panela+eletrica+de+arroz&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener">Ver preço na Amazon</a>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 40 46 12c4-3 9 2 6 6L22 46z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 46 10 56c-3 2-6-1-4-4l6-8z" fill="var(--ink)"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Preparo</span>
+            <h3>Faca do Chef 8"</h3>
+            <p>Lâmina afiada corta a carne em tiras finas e uniformes, que cozinham por igual e ficam macias.</p>
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-amazon" href="https://www.amazon.com.br/s?k=faca+do+chef+8+polegadas&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener">Ver preço na Amazon</a>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M16 10h32l-4 6 4 6v30a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V22l4-6z" fill="var(--mustard)"/><path d="M22 34h20M24 40h16M22 46h20" stroke="var(--tomato)" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Ingrediente</span>
+            <h3>Batata Palha Premium</h3>
+            <p>Fios extrafinos e crocantes, comprados em fardo para eventos com muita gente.</p>
+          </div>
+          <div class="product-cta">
+            <a class="btn btn-amazon" href="https://www.amazon.com.br/s?k=batata+palha+extrafina&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener">Ver preço na Amazon</a>
+          </div>
+        </article>
+      </div>
+      <p class="disclosure">Como Associado da Amazon, recebemos por compras qualificadas feitas a partir dos links desta página, sem custo extra para você.</p>
+    </section>
+
+    <!-- ===================== MODO DE PREPARO ===================== -->
+    <section class="section" id="preparo" aria-labelledby="h-preparo">
+      <h2 id="h-preparo">Como fazer o strogonoff</h2>
+      <ol class="steps">
+        <li>Corte a carne ou o frango em tiras finas e tempere com sal e pimenta.</li>
+        <li>Doure em panela bem quente, em levas pequenas, para a carne fritar em vez de cozinhar na própria água.</li>
+        <li>Se for usar cebola e alho, refogue os dois na mesma panela até murcharem e devolva a carne.</li>
+        <li>Junte o champignon, o molho de tomate (ou ketchup) e a mostarda. Cozinhe por 5 minutos.</li>
+        <li>Desligue o fogo e misture o creme de leite. Não deixe ferver, ou ele talha.</li>
+        <li>Sirva com arroz branco e a batata palha por cima, na hora de comer.</li>
+      </ol>
+    </section>
+
+    <!-- ===================== PERGUNTAS FREQUENTES ===================== -->
+    <section class="section" aria-labelledby="h-faq">
+      <h2 id="h-faq">Perguntas frequentes</h2>
+      <div class="faq">
+        <details>
+          <summary>Quanto de carne comprar para strogonoff por pessoa?</summary>
+          <p>Calcule 200 g de carne ou frango por pessoa. Para 10 pessoas, são 2 kg. Em festas com outros pratos, dá para reduzir para 150 g.</p>
+        </details>
+        <details>
+          <summary>Quantas caixinhas de creme de leite usar?</summary>
+          <p>Meia caixinha de 200 g por pessoa, ou seja, uma caixinha a cada duas pessoas.</p>
+        </details>
+        <details>
+          <summary>Quanto de batata palha comprar?</summary>
+          <p>Cerca de 50 g por pessoa. Um pacote de 120 g serve de duas a três pessoas.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="site-footer">
+    <p>Calculadora de Strogonoff · Valores estimados com base em preços médios de supermercado. Confira os preços da sua região.</p>
+    <p>Como Associado da Amazon, ganhamos com compras qualificadas.</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/* ==========================================================
+   CONFIGURAÇÃO
+   ----------------------------------------------------------
+   porPessoa: gramas por pessoa (receita base)
+   preco:     preço médio em R$ por kg (editável pelo usuário)
+   emb:       tamanho da embalagem comum em gramas (null = a granel)
+   ========================================================== */
+const INGREDIENTES = [
+  { id: 'carne',     nome: 'Carne (alcatra ou patinho)', porPessoa: 200, preco: 46.90, emb: null, embNome: 'no açougue',     proteina: 'carne' },
+  { id: 'frango',    nome: 'Peito de frango',            porPessoa: 200, preco: 21.90, emb: null, embNome: 'no açougue',     proteina: 'frango' },
+  { id: 'creme',     nome: 'Creme de leite',             porPessoa: 100, preco: 22.50, emb: 200,  embNome: 'caixinha de 200 g' },
+  { id: 'champ',     nome: 'Champignon fatiado',         porPessoa: 50,  preco: 79.00, emb: 100,  embNome: 'vidro de 100 g drenado' },
+  { id: 'molho',     nome: 'Molho de tomate ou ketchup', porPessoa: 30,  preco: 13.00, emb: 300,  embNome: 'sachê de 300 g' },
+  { id: 'mostarda',  nome: 'Mostarda',                   porPessoa: 15,  preco: 24.00, emb: 200,  embNome: 'frasco de 200 g' },
+  { id: 'arroz',     nome: 'Arroz branco (cru)',         porPessoa: 80,  preco: 6.20,  emb: 1000, embNome: 'pacote de 1 kg' },
+  { id: 'batata',    nome: 'Batata palha',               porPessoa: 50,  preco: 41.00, emb: 120,  embNome: 'pacote de 120 g' },
+  // Opcionais: entram na conta só quando o usuário marca "Incluir cebola e alho"
+  { id: 'cebola',    nome: 'Cebola',                     porPessoa: 30,  preco: 6.50,  emb: 150,  embNome: 'cebola média (~150 g)', opcional: true },
+  { id: 'alho',      nome: 'Alho',                       porPessoa: 3,   preco: 35.00, emb: 50,   embNome: 'cabeça (~50 g)',        opcional: true }
+];
+const MIN = 1, MAX = 100;
+const STORAGE_KEY = 'calc-strogonoff-precos-v1';
+
+/* ---------- Estado ---------- */
+const padrao = Object.fromEntries(INGREDIENTES.map(i => [i.id, i.preco]));
+let precos = { ...padrao };
+let pessoas = 10;
+let proteina = 'carne';
+let incluirOpcionais = true;
+
+// Recupera preços salvos (localStorage pode estar bloqueado: sempre em try/catch)
+try {
+  const salvo = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+  if (salvo) for (const k in salvo) if (k in precos && salvo[k] > 0) precos[k] = salvo[k];
+} catch (e) { /* segue com os preços padrão */ }
+
+/* ---------- Formatadores ---------- */
+const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const num1 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
+function formatarPeso(g) {
+  return g >= 1000 ? num1.format(g / 1000) + ' kg' : Math.round(g) + ' g';
+}
+
+/* ---------- Elementos ---------- */
+const $ = id => document.getElementById(id);
+const elQtd = $('qtd'), elSlider = $('slider'), elLista = $('checklist');
+
+/* ---------- Ingredientes ativos conforme a proteína ---------- */
+function ativos() {
+  return INGREDIENTES.filter(i =>
+    (!i.proteina || i.proteina === proteina) && (!i.opcional || incluirOpcionais));
+}
+
+/* ---------- Monta a lista uma vez; depois só atualiza valores ---------- */
+function montarLista() {
+  elLista.innerHTML = '';
+  for (const ing of ativos()) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <label class="item" for="chk-${ing.id}">
+        <input type="checkbox" id="chk-${ing.id}">
+        <span class="item-name">${ing.nome}${ing.opcional ? ' <em class="opt">opcional</em>' : ''}<span class="item-pack" data-pack="${ing.id}"></span></span>
+        <span class="item-qty"><b class="num" data-qtd="${ing.id}"></b><span class="num" data-custo="${ing.id}"></span></span>
+      </label>`;
+    elLista.appendChild(li);
+  }
+}
+
+function montarPrecos() {
+  const grid = $('price-grid');
+  grid.innerHTML = '';
+  for (const ing of INGREDIENTES) {
+    const label = document.createElement('label');
+    label.innerHTML = `${ing.nome}
+      <span class="price-field"><span>R$</span>
+        <input id="preco-${ing.id}" type="number" inputmode="decimal" min="0" step="0.10" value="${precos[ing.id].toFixed(2)}">
+        <span>/kg</span></span>`;
+    grid.appendChild(label);
+    label.querySelector('input').addEventListener('input', e => {
+      const v = parseFloat(e.target.value.replace(',', '.'));
+      precos[ing.id] = isFinite(v) && v >= 0 ? v : 0;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(precos)); } catch (err) {}
+      calcular();
+    });
+  }
+}
+
+/* ---------- Cálculo principal ---------- */
+function calcular() {
+  let total = 0, totalEmb = 0, pesoTotal = 0;
+
+  for (const ing of ativos()) {
+    const gramas = ing.porPessoa * pessoas;
+    const custo = gramas / 1000 * precos[ing.id];
+    total += custo;
+    pesoTotal += gramas;
+
+    // Embalagens inteiras a comprar (ou peso exato no açougue)
+    let pack;
+    if (ing.emb) {
+      const n = Math.ceil(gramas / ing.emb);
+      totalEmb += n * ing.emb / 1000 * precos[ing.id];
+      pack = `${n} × ${ing.embNome}`;
+    } else {
+      totalEmb += custo;
+      pack = `Peça ${formatarPeso(gramas)} ${ing.embNome}`;
+    }
+
+    document.querySelector(`[data-qtd="${ing.id}"]`).textContent = formatarPeso(gramas);
+    document.querySelector(`[data-custo="${ing.id}"]`).textContent = brl.format(custo);
+    document.querySelector(`[data-pack="${ing.id}"]`).textContent = pack;
+  }
+
+  $('custo-total').textContent = brl.format(total);
+  $('custo-pessoa').textContent = brl.format(total / pessoas);
+  $('custo-embalagens').textContent = brl.format(totalEmb);
+  $('custo-legenda').textContent = `para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}`;
+  $('peso-total').textContent = `${formatarPeso(pesoTotal)} de ingredientes no total`;
+
+  // Preenchimento do slider e estado dos atalhos
+  elSlider.style.setProperty('--fill', ((pessoas - MIN) / (MAX - MIN) * 100) + '%');
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(+c.dataset.n === pessoas)));
+
+  $('whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(textoLista());
+}
+
+/* ---------- Atualiza o número de pessoas a partir de qualquer controle ---------- */
+function definirPessoas(n, origem) {
+  n = Math.round(Number(n));
+  if (!isFinite(n)) return;
+  pessoas = Math.min(MAX, Math.max(MIN, n));
+  if (origem !== 'input') elQtd.value = pessoas;
+  elSlider.value = pessoas;
+  calcular();
+}
+
+/* ---------- Texto para copiar/compartilhar ---------- */
+function textoLista() {
+  const linhas = ativos().map(i => {
+    const g = i.porPessoa * pessoas;
+    const extra = i.emb ? ` (${Math.ceil(g / i.emb)} × ${i.embNome})` : '';
+    return `☐ ${i.nome}: ${formatarPeso(g)}${extra}`;
+  });
+  return `🛒 Strogonoff para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}\n\n${linhas.join('\n')}\n\nCusto estimado: ${$('custo-total').textContent} (${$('custo-pessoa').textContent} por pessoa)`;
+}
+
+function avisar(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.hidden = false;
+  clearTimeout(avisar.timer);
+  avisar.timer = setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+/* ---------- Eventos ---------- */
+elSlider.addEventListener('input', e => definirPessoas(e.target.value, 'slider'));
+elQtd.addEventListener('input', e => { if (e.target.value !== '') definirPessoas(e.target.value, 'input'); });
+elQtd.addEventListener('blur', () => { elQtd.value = pessoas; });
+$('menos').addEventListener('click', () => definirPessoas(pessoas - 1));
+$('mais').addEventListener('click', () => definirPessoas(pessoas + 1));
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => definirPessoas(c.dataset.n)));
+
+$('opcionais').addEventListener('change', e => {
+  incluirOpcionais = e.target.checked;
+  montarLista();
+  calcular();
+});
+
+document.querySelectorAll('input[name="proteina"]').forEach(r => r.addEventListener('change', e => {
+  proteina = e.target.value;
+  montarLista();
+  calcular();
+}));
+
+$('limpar').addEventListener('click', () => {
+  elLista.querySelectorAll('input[type="checkbox"]').forEach(c => { c.checked = false; });
+});
+
+$('reset-precos').addEventListener('click', () => {
+  precos = { ...padrao };
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  montarPrecos();
+  calcular();
+  avisar('Preços restaurados');
+});
+
+$('copiar').addEventListener('click', () => {
+  const texto = textoLista();
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = texto; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); avisar('Lista copiada'); } catch (e) { avisar('Não foi possível copiar'); }
+    ta.remove();
+  };
+  if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => avisar('Lista copiada'), fallback);
+  else fallback();
+});
+
+/* ---------- Início ---------- */
+montarLista();
+montarPrecos();
+definirPessoas(10);
+</script>
+</body>
+</html>
