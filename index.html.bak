@@ -80,12 +80,12 @@
         "3 g de alho picado (opcional)"
       ],
       "recipeInstructions": [
-        { "@type": "HowToStep", "name": "Cortar e temperar", "url": "https://calculadoradestrogonoff.com.br/#passo-1", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Corte a carne ou o frango em tiras finas e tempere com sal e pimenta." },
-        { "@type": "HowToStep", "name": "Dourar a proteína", "url": "https://calculadoradestrogonoff.com.br/#passo-2", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Doure a proteína em panela bem quente, em levas, para não soltar água." },
-        { "@type": "HowToStep", "name": "Refogar cebola e alho", "url": "https://calculadoradestrogonoff.com.br/#passo-3", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Se for usar, refogue a cebola e o alho na mesma panela até murcharem e volte com a carne." },
-        { "@type": "HowToStep", "name": "Juntar o molho", "url": "https://calculadoradestrogonoff.com.br/#passo-4", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Junte o champignon, o molho de tomate (ou ketchup) e a mostarda e cozinhe por 5 minutos." },
-        { "@type": "HowToStep", "name": "Acrescentar o creme de leite", "url": "https://calculadoradestrogonoff.com.br/#passo-5", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Desligue o fogo, acrescente o creme de leite e misture sem deixar ferver." },
-        { "@type": "HowToStep", "name": "Servir", "url": "https://calculadoradestrogonoff.com.br/#passo-6", "image": "https://calculadoradestrogonoff.com.br/og-image.png", "text": "Sirva com arroz branco e batata palha por cima." }
+        { "@type": "HowToStep", "text": "Corte a carne ou o frango em tiras finas e tempere com sal e pimenta." },
+        { "@type": "HowToStep", "text": "Doure a proteína em panela bem quente, em levas, para não soltar água." },
+        { "@type": "HowToStep", "text": "Se for usar, refogue a cebola e o alho na mesma panela até murcharem e volte com a carne." },
+        { "@type": "HowToStep", "text": "Junte o champignon, o molho de tomate (ou ketchup) e a mostarda e cozinhe por 5 minutos." },
+        { "@type": "HowToStep", "text": "Desligue o fogo, acrescente o creme de leite e misture sem deixar ferver." },
+        { "@type": "HowToStep", "text": "Sirva com arroz branco e batata palha por cima." }
       ]
     },
     {
@@ -564,12 +564,12 @@ details.prices summary::marker { color: var(--tomato); }
     <section class="section" id="preparo" aria-labelledby="h-preparo">
       <h2 id="h-preparo">Como fazer o strogonoff</h2>
       <ol class="steps">
-        <li id="passo-1">Corte a carne ou o frango em tiras finas e tempere com sal e pimenta.</li>
-        <li id="passo-2">Doure em panela bem quente, em levas pequenas, para a carne fritar em vez de cozinhar na própria água.</li>
-        <li id="passo-3">Se for usar cebola e alho, refogue os dois na mesma panela até murcharem e devolva a carne.</li>
-        <li id="passo-4">Junte o champignon, o molho de tomate (ou ketchup) e a mostarda. Cozinhe por 5 minutos.</li>
-        <li id="passo-5">Desligue o fogo e misture o creme de leite. Não deixe ferver, ou ele talha.</li>
-        <li id="passo-6">Sirva com arroz branco e a batata palha por cima, na hora de comer.</li>
+        <li>Corte a carne ou o frango em tiras finas e tempere com sal e pimenta.</li>
+        <li>Doure em panela bem quente, em levas pequenas, para a carne fritar em vez de cozinhar na própria água.</li>
+        <li>Se for usar cebola e alho, refogue os dois na mesma panela até murcharem e devolva a carne.</li>
+        <li>Junte o champignon, o molho de tomate (ou ketchup) e a mostarda. Cozinhe por 5 minutos.</li>
+        <li>Desligue o fogo e misture o creme de leite. Não deixe ferver, ou ele talha.</li>
+        <li>Sirva com arroz branco e a batata palha por cima, na hora de comer.</li>
       </ol>
     </section>
 
