@@ -19,8 +19,9 @@ resultados pagos do Google (Google Ads), medir o retorno e não gastar à toa.
    - Envie o sitemap: `https://calculadoradestrogonoff.com.br/sitemap.xml`.
    - Isso não é anúncio, mas mostra para quais buscas o site já aparece de graça
      — ótima fonte de palavras-chave.
-2. **ID de afiliado da Amazon** – troque `SEUTAG-20` pelo seu ID real em todos
-   os links do `index.html`. Sem isso, os cliques pagos não geram comissão.
+2. **ID de afiliado da Amazon** – já configurado: todos os links do
+   `index.html` usam `tag=calcstrogonof-20`. Sem ele, os cliques pagos não
+   geram comissão.
 3. **Conta Google** que será dona da conta de anúncios (use a mesma do
    Search Console).
 4. **Cartão de crédito, boleto ou Pix** para pagar os anúncios.
@@ -250,7 +251,7 @@ Métricas de referência para começar (ajuste com seus dados):
 ### Checklist rápido
 
 - [ ] Search Console verificado e sitemap enviado
-- [ ] `SEUTAG-20` trocado pelo ID real da Amazon
+- [x] `SEUTAG-20` trocado pelo ID real da Amazon (`calcstrogonof-20`)
 - [ ] Conta Google Ads criada no **modo Especialista**, BRL e fuso de Brasília
 - [ ] Tag do Google no `<head>` e conversões `copiar_lista` / `clique_amazon` gravando
 - [ ] Aviso de cookies/privacidade no site
