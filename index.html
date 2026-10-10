@@ -9,13 +9,23 @@
   gtag('js', new Date());
   gtag('config', 'AW-18505768191');
 </script>
-<!-- Event snippet for Visualização de página conversion page -->
+<!-- Event snippet for Visualização de página conversion page
+     Disparado no clique de "Copiar lista" e "Ver preço na Amazon" (ver final do script). -->
 <script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
   gtag('event', 'conversion', {
       'send_to': 'AW-18505768191/TbXcCP-MpJgdEP-5nvhE',
       'value': 1.0,
-      'currency': 'BRL'
+      'currency': 'BRL',
+      'event_callback': callback
   });
+  return false;
+}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -903,6 +913,11 @@ $('copiar').addEventListener('click', () => {
   if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => avisar('Lista copiada'), fallback);
   else fallback();
 });
+
+/* ---------- Conversões Google Ads ---------- */
+// Os links da Amazon abrem em nova aba, então não passamos a URL (sem redirecionar esta página).
+$('copiar').addEventListener('click', () => gtag_report_conversion());
+document.querySelectorAll('.btn-amazon').forEach(a => a.addEventListener('click', () => gtag_report_conversion()));
 
 /* ---------- Início ---------- */
 montarLista();
