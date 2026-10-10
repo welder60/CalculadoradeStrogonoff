@@ -56,22 +56,22 @@ Site**. Informe a URL do site e escolha **"Configurar manualmente com código"**
 Crie as duas ações acima (categoria: *Envio de formulário de lead* para
 `copiar_lista` e *Saída de página/Outro* para `clique_amazon`). O Google mostra:
 
-- o **ID da tag**, no formato `AW-123456789`;
+- o **ID da tag**, no formato `AW-18505768191`;
 - um **rótulo** para cada conversão, no formato `AbCdEfGh123`.
 
 ### 2.2 Colar a tag no `index.html`
 
-Logo depois de `<head>` (antes do `<title>`), cole — trocando `AW-123456789`
+Logo depois de `<head>` (antes do `<title>`), cole — trocando `AW-18505768191`
 pelo seu ID:
 
 ```html
 <!-- Google tag (gtag.js) - Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-123456789"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18505768191"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'AW-123456789');
+  gtag('config', 'AW-18505768191');
 </script>
 ```
 
@@ -83,7 +83,7 @@ adicione (trocando os rótulos):
 ```js
 /* ---------- Conversões Google Ads ---------- */
 function converter(rotulo) {
-  if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-123456789/' + rotulo });
+  if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18505768191/' + rotulo });
 }
 $('copiar').addEventListener('click', () => converter('ROTULO_COPIAR_LISTA'));
 document.querySelectorAll('.btn-amazon').forEach(a =>
