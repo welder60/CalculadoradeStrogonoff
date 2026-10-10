@@ -63,8 +63,8 @@ salvaram, troque a versão em `STORAGE_KEY`.
 
 ## Afiliados e anúncios
 
-- Troque `SEUTAG-20` pelo seu ID de afiliado da Amazon em todos os links de
-  `index.html`; sem isso os cliques não geram comissão.
+- Os links da Amazon em `index.html` usam o ID de Associado `calcstrogonof-20`
+  (parâmetro `tag=`). Todo link novo precisa dele para gerar comissão.
 - A tag do Google Ads fica no `<head>` de `index.html`. O passo a passo para
   criar campanhas e medir conversões está em
   [`docs/ANUNCIAR-NO-GOOGLE.md`](docs/ANUNCIAR-NO-GOOGLE.md).
