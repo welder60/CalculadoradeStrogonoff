@@ -162,6 +162,12 @@
   --amazon: #ff9900;      /* botão de afiliado */
   --amazon-hover: #f08700;
   --amazon-ink: #111111;
+  --wood: #b5763f;        /* ilustrações dos produtos */
+  --wood-dark: #8a5528;
+  --steel: #d7dce2;
+  --steel-dark: #9aa3ad;
+  --beef: #7e3a20;
+  --rice: #fffaf0;
   --done: #a8968a;
 
   --font-display: "Young Serif", Georgia, "Times New Roman", serif;
@@ -332,8 +338,16 @@ details.prices summary::marker { color: var(--tomato); }
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
 .product { display: grid; grid-template-rows: auto 1fr auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; }
 .product:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(60, 30, 15, .12); }
-.product-img { aspect-ratio: 4 / 3; max-width: 100%; background: var(--mustard-soft); display: grid; place-items: center; }
-.product-img svg { width: 46%; height: auto; }
+/* Ilustrações: SVG 4:3 sobre fundo radial; para foto real use <img> no lugar do <svg> (fundo branco, object-fit: contain). */
+.product-img { position: relative; aspect-ratio: 4 / 3; max-width: 100%; display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, var(--surface) 0 22%, var(--mustard-soft) 72%); }
+.product:nth-child(even) .product-img { background: radial-gradient(circle at 50% 42%, var(--surface) 0 22%, var(--tomato-soft) 72%); }
+.product-img svg { --ink: #2c1b14; width: 88%; height: auto; transition: transform .3s ease; } /* contorno escuro fixo nos dois temas */
+.product-img img { width: 100%; height: 100%; object-fit: contain; padding: 14px; background: #fff; transition: transform .3s ease; }
+.product:hover .product-img svg, .product:hover .product-img img { transform: scale(1.06); }
+.product-img::after { content: "amazon.com.br"; position: absolute; right: 10px; bottom: 8px; font-size: .68rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--amazon-ink); background: var(--amazon); padding: 2px 8px; border-radius: 999px; opacity: .9; }
+@media (prefers-reduced-motion: reduce) { .product-img svg, .product-img img { transition: none; } .product:hover .product-img svg, .product:hover .product-img img { transform: none; } }
 .product-body { display: grid; align-content: start; gap: 6px; padding: 16px 16px 4px; }
 .product-tag { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mustard); }
 .product-body p { font-size: .9rem; color: var(--muted); }
@@ -512,9 +526,24 @@ details.prices summary::marker { color: var(--tomato); }
 
       <div class="products">
         <article class="product">
-          <div class="product-img">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 26h44v6c0 12-9 20-22 20S6 44 6 32z" fill="var(--tomato)"/><rect x="2" y="23" width="52" height="5" rx="2.5" fill="var(--ink)"/><rect x="50" y="24" width="12" height="3.5" rx="1.75" fill="var(--ink)"/></svg>
-          </div>
+          <a class="product-img" href="https://www.amazon.com.br/s?k=panela+wok+antiaderente&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener" tabindex="-1" aria-hidden="true">
+            <svg viewBox="0 0 120 90" role="img" aria-label="Panela wok com strogonoff fumegante">
+              <ellipse cx="58" cy="80" rx="40" ry="4" fill="var(--ink)" opacity=".12"/>
+              <path d="M42 26c-4-5 4-8 0-14M56 24c-4-5 4-8 0-14M70 26c-4-5 4-8 0-14" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+              <rect x="88" y="41" width="10" height="5" fill="var(--ink)"/>
+              <rect x="96" y="39" width="22" height="9" rx="4.5" fill="var(--wood)"/>
+              <rect x="99" y="41.5" width="15" height="2" rx="1" fill="var(--wood-dark)" opacity=".6"/>
+              <path d="M12 42h84c0 20-17 34-42 34S12 62 12 42z" fill="var(--ink)"/>
+              <path d="M20 50c4 11 14 18 28 20" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="54" cy="42" rx="40" ry="8" fill="var(--tomato)"/>
+              <ellipse cx="54" cy="42" rx="42" ry="9" fill="none" stroke="var(--ink)" stroke-width="3"/>
+              <rect x="30" y="38" width="13" height="4.5" rx="2.2" fill="var(--beef)" transform="rotate(-12 36 40)"/>
+              <rect x="50" y="41" width="14" height="4.5" rx="2.2" fill="var(--beef)" transform="rotate(8 57 43)"/>
+              <rect x="66" y="36" width="12" height="4.5" rx="2.2" fill="var(--beef)" transform="rotate(-6 72 38)"/>
+              <circle cx="46" cy="38" r="2.6" fill="var(--rice)"/><circle cx="74" cy="44" r="2.6" fill="var(--rice)"/><circle cx="62" cy="37" r="2.2" fill="var(--rice)"/>
+              <circle cx="38" cy="45" r="1.4" fill="#4f8a3a"/><circle cx="68" cy="41" r="1.4" fill="#4f8a3a"/>
+            </svg>
+          </a>
           <div class="product-body">
             <span class="product-tag">Panela</span>
             <h3>Panela Wok ou Caçarola Grande</h3>
@@ -526,9 +555,22 @@ details.prices summary::marker { color: var(--tomato); }
         </article>
 
         <article class="product">
-          <div class="product-img">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="20" width="40" height="34" rx="10" fill="var(--tomato)"/><path d="M12 26a20 8 0 0 1 40 0z" fill="var(--ink)"/><rect x="28" y="10" width="8" height="8" rx="3" fill="var(--ink)"/><circle cx="32" cy="42" r="4" fill="var(--mustard)"/></svg>
-          </div>
+          <a class="product-img" href="https://www.amazon.com.br/s?k=panela+eletrica+de+arroz&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener" tabindex="-1" aria-hidden="true">
+            <svg viewBox="0 0 120 90" role="img" aria-label="Panela elétrica de arroz ao lado de uma tigela de arroz">
+              <ellipse cx="60" cy="82" rx="46" ry="4" fill="var(--ink)" opacity=".12"/>
+              <path d="M48 14c-3-4 3-6 0-10M58 12c-3-4 3-6 0-10" fill="none" stroke="var(--muted)" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+              <rect x="22" y="34" width="60" height="46" rx="14" fill="var(--rice)" stroke="var(--ink)" stroke-width="2.5"/>
+              <path d="M20 36c0-12 14-18 32-18s32 6 32 18z" fill="var(--tomato)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M30 30c4-5 12-7 20-7" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="46" y="12" width="12" height="7" rx="3.5" fill="var(--ink)"/>
+              <rect x="38" y="50" width="28" height="18" rx="5" fill="var(--ink)"/>
+              <circle cx="46" cy="59" r="3" fill="var(--mustard)"/><circle cx="58" cy="59" r="3" fill="var(--tomato)" opacity=".8"/>
+              <path d="M26 46h52" stroke="var(--line)" stroke-width="2"/>
+              <path d="M84 66h30c0 9-6 14-15 14s-15-5-15-14z" fill="var(--tomato)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M86 66c0-6 6-9 13-9s13 3 13 9z" fill="var(--rice)" stroke="var(--ink)" stroke-width="1.6"/>
+              <circle cx="95" cy="62" r="1" fill="var(--line)"/><circle cx="101" cy="61" r="1" fill="var(--line)"/><circle cx="105" cy="64" r="1" fill="var(--line)"/>
+            </svg>
+          </a>
           <div class="product-body">
             <span class="product-tag">Acompanhamento</span>
             <h3>Panela Elétrica de Arroz</h3>
@@ -540,9 +582,22 @@ details.prices summary::marker { color: var(--tomato); }
         </article>
 
         <article class="product">
-          <div class="product-img">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 40 46 12c4-3 9 2 6 6L22 46z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 46 10 56c-3 2-6-1-4-4l6-8z" fill="var(--ink)"/></svg>
-          </div>
+          <a class="product-img" href="https://www.amazon.com.br/s?k=faca+do+chef+8+polegadas&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener" tabindex="-1" aria-hidden="true">
+            <svg viewBox="0 0 120 90" role="img" aria-label="Faca do chef sobre tábua com tiras de carne">
+              <ellipse cx="60" cy="80" rx="50" ry="4" fill="var(--ink)" opacity=".12"/>
+              <rect x="10" y="36" width="100" height="40" rx="8" fill="var(--wood)"/>
+              <rect x="10" y="36" width="100" height="40" rx="8" fill="none" stroke="var(--wood-dark)" stroke-width="2"/>
+              <circle cx="100" cy="46" r="3.5" fill="var(--wood-dark)"/>
+              <path d="M18 66h50M22 70h36" stroke="var(--wood-dark)" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
+              <rect x="64" y="56" width="18" height="5" rx="2.5" fill="var(--beef)" transform="rotate(-8 73 58)"/>
+              <rect x="70" y="63" width="20" height="5" rx="2.5" fill="var(--beef)" transform="rotate(4 80 65)"/>
+              <rect x="82" y="56" width="16" height="5" rx="2.5" fill="#a24a2a" transform="rotate(10 90 58)"/>
+              <path d="M8 34 74 18c6-1 9 4 4 8L18 50c-6 2-12-2-10-8z" fill="var(--steel)" stroke="var(--steel-dark)" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M14 40 72 23" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+              <path d="M76 22 108 12c4-1 6 4 2 6L80 30z" fill="var(--ink)"/>
+              <circle cx="88" cy="20" r="1.6" fill="var(--steel)"/><circle cx="98" cy="17" r="1.6" fill="var(--steel)"/>
+            </svg>
+          </a>
           <div class="product-body">
             <span class="product-tag">Preparo</span>
             <h3>Faca do Chef 8"</h3>
@@ -554,9 +609,19 @@ details.prices summary::marker { color: var(--tomato); }
         </article>
 
         <article class="product">
-          <div class="product-img">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M16 10h32l-4 6 4 6v30a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V22l4-6z" fill="var(--mustard)"/><path d="M22 34h20M24 40h16M22 46h20" stroke="var(--tomato)" stroke-width="3" stroke-linecap="round"/></svg>
-          </div>
+          <a class="product-img" href="https://www.amazon.com.br/s?k=batata+palha+extrafina&amp;tag=SEUTAG-20" target="_blank" rel="sponsored nofollow noopener" tabindex="-1" aria-hidden="true">
+            <svg viewBox="0 0 120 90" role="img" aria-label="Pacote de batata palha com fios espalhados">
+              <ellipse cx="58" cy="83" rx="44" ry="4" fill="var(--ink)" opacity=".12"/>
+              <path d="M36 12h44l4 6-4 6v52a5 5 0 0 1-5 5H41a5 5 0 0 1-5-5V24l-4-6z" fill="var(--mustard)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M36 12l4 4 4-4 4 4 4-4 4 4 4-4 4 4 4-4 4 4 4-4" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M40 30c4 0 6-2 6-6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="42" y="32" width="32" height="12" rx="3" fill="var(--tomato)"/>
+              <path d="M47 38h22" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+              <ellipse cx="58" cy="60" rx="13" ry="11" fill="var(--rice)" stroke="var(--ink)" stroke-width="1.6"/>
+              <path d="M50 56l8 4M54 52l6 9M60 54l4 8M51 62l10-3M56 66l8-6M62 58l3 7" stroke="var(--mustard)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M88 74l10-3M92 79l12-2M86 80l6-6M100 74l8 4M96 68l6 4M18 76l10-2M22 80l8-5M14 72l6 4" stroke="var(--mustard)" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </a>
           <div class="product-body">
             <span class="product-tag">Ingrediente</span>
             <h3>Batata Palha Premium</h3>
