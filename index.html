@@ -8,7 +8,6 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18505768191');
-  gtag('config', 'AW-1027181052'); // conta das ações de conversão
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -968,7 +967,7 @@ function converter(sendTo) {
   if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
 }
 document.querySelectorAll('a[href*="amazon.com.br"]').forEach(a =>
-  a.addEventListener('click', () => converter('AW-1027181052/mlruCLmXrpgdEPyT5ukD')));
+  a.addEventListener('click', () => converter('AW-18505768191/mlruCLmXrpgdEPyT5ukD')));
 
 /* ---------- Início ---------- */
 montarLista();
