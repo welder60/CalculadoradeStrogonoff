@@ -8,6 +8,7 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18505768191');
+  gtag('config', 'AW-1027181052'); // conta das ações de conversão
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -717,6 +718,7 @@ details.prices summary::marker { color: var(--tomato); }
   <footer class="site-footer">
     <p>Calculadora de Strogonoff · Valores estimados com base em preços médios de supermercado. Confira os preços da sua região.</p>
     <p>Como Associado da Amazon, ganhamos com compras qualificadas.</p>
+    <p>Este site usa cookies do Google Ads para medir visitas e cliques vindos de anúncios. Nenhum dado pessoal é coletado pela calculadora.</p>
     <p>Atualizado em <time datetime="2026-10-08">8 de outubro de 2026</time>.</p>
   </footer>
 </div>
@@ -960,6 +962,13 @@ $('copiar').addEventListener('click', () => {
   if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => avisar('Lista copiada'), fallback);
   else fallback();
 });
+
+/* ---------- Conversões Google Ads ---------- */
+function converter(sendTo) {
+  if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
+}
+document.querySelectorAll('a[href*="amazon.com.br"]').forEach(a =>
+  a.addEventListener('click', () => converter('AW-1027181052/mlruCLmXrpgdEPyT5ukD')));
 
 /* ---------- Início ---------- */
 montarLista();
