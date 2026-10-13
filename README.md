@@ -27,6 +27,7 @@ e por pessoa.
 | Arquivo | Conteúdo |
 |---|---|
 | `index.html` | Todo o site: HTML, CSS e JavaScript, sem dependências nem build |
+| `privacidade.html` | Política de Privacidade e Cookies (LGPD) |
 | `favicon.*`, `favicon-*.png`, `apple-touch-icon.png` | Ícones do site |
 | `og-image.png` | Imagem de compartilhamento em redes sociais |
 | `site.webmanifest` | Manifesto para instalar o site como app |
@@ -65,8 +66,14 @@ salvaram, troque a versão em `STORAGE_KEY`.
 
 - Os links da Amazon em `index.html` usam o ID de Associado `calcstrogonof-20`
   (parâmetro `tag=`). Todo link novo precisa dele para gerar comissão.
-- A tag do Google Ads fica no `<head>` de `index.html`. O passo a passo para
-  criar campanhas e medir conversões está em
+- A tag do Google Ads fica no `<head>` de `index.html`, com o Modo de
+  consentimento v2: os cookies começam negados e só são liberados quando o
+  visitante clica em "Aceitar" no banner de cookies. A escolha fica no
+  `localStorage` (chave `strogonoff-cookies-v1`) e pode ser mudada pelo link
+  "Preferências de cookies" no rodapé ou em `privacidade.html`.
+- Ao adicionar outra ferramenta que grave cookies ou colete dados, atualize
+  `privacidade.html`.
+- O passo a passo para criar campanhas e medir conversões está em
   [`docs/ANUNCIAR-NO-GOOGLE.md`](docs/ANUNCIAR-NO-GOOGLE.md).
 
 ## Publicação
