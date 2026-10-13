@@ -17,6 +17,14 @@
   });
   gtag('set', 'ads_data_redaction', liberado === 'denied');
 </script>
+<script>
+  // Tema claro/escuro escolhido pelo visitante, aplicado antes da pintura para não piscar
+  var TEMA_KEY = 'calc-strogonoff-tema';
+  try {
+    var tema = localStorage.getItem(TEMA_KEY);
+    if (tema === 'dark' || tema === 'light') document.documentElement.setAttribute('data-theme', tema);
+  } catch (e) {}
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18505768191"></script>
 <script>
   gtag('js', new Date());
@@ -29,11 +37,12 @@
      SEO: título, descrição, canonical e Open Graph
      ============================================================ -->
 <title>Calculadora de Strogonoff - Quantidades e Preços exatos</title>
-<meta name="description" content="Não sabe quanto de carne comprar para o strogonoff? Use nossa calculadora online gratuita e descubra a quantidade e o custo exato por pessoa!">
+<meta name="description" content="Não sabe quanto de carne comprar para o strogonoff? Calcule a quantidade de cada ingrediente, o custo por pessoa, o tamanho da panela e o tempo de preparo para 1 a 100 pessoas.">
 <meta name="keywords" content="calculadora de strogonoff, strogonoff para quantas pessoas, quanto de carne para strogonoff, strogonoff de frango, lista de compras strogonoff">
 <link rel="canonical" href="https://calculadoradestrogonoff.com.br/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#c8452e">
+<meta name="apple-mobile-web-app-title" content="Strogonoff">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
@@ -153,6 +162,16 @@
           "@type": "Question",
           "name": "Dá para congelar strogonoff?",
           "acceptedAnswer": { "@type": "Answer", "text": "Sim. Congele sem a batata palha e sem o arroz, em pote bem fechado, por até 3 meses. Ao reaquecer, mexa bem, porque o creme de leite pode separar um pouco." }
+        },
+        {
+          "@type": "Question",
+          "name": "Que tamanho de panela usar para strogonoff para muita gente?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Conte cerca de meio litro por pessoa, já com folga para mexer. Para 10 pessoas, uma panela de 7 litros; para 30, uma de 20 litros ou duas de 10. A calculadora sugere o tamanho da panela, quantas levas de carne dourar e o tempo de preparo para qualquer número de pessoas." }
+        },
+        {
+          "@type": "Question",
+          "name": "Quando usar 150 g ou 250 g de carne por pessoa no strogonoff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use 150 g (porção leve) quando houver outros pratos principais, muitas crianças ou o strogonoff for acompanhamento. Use 250 g (porção farta) quando ele for o único prato e o grupo comer bem. Na calculadora, escolha em Tamanho da porção: todos os ingredientes são ajustados junto." }
         }
       ]
     }
@@ -232,6 +251,20 @@ a { color: var(--tomato); }
 .site-header nav a { color: var(--muted); text-decoration: none; }
 .site-header nav a:hover { color: var(--tomato); }
 @media (max-width: 520px) { .site-header nav { display: none; } }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none;
+}
+.theme-toggle:hover { border-color: var(--tomato); color: var(--tomato); }
+.theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle .ico-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .ico-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .ico-moon { display: none; }
+}
+:root[data-theme="dark"] .theme-toggle .ico-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .ico-moon { display: none; }
 
 /* ---------- Hero / calculadora ---------- */
 .hero { display: grid; gap: 14px; padding-block: 8px 24px; }
@@ -293,7 +326,10 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius
 .protein label { text-align: center; padding: 11px 8px; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--muted); }
 .protein input:checked + label { background: var(--mustard-soft); color: var(--ink); box-shadow: inset 0 -3px 0 var(--mustard); }
 .protein input:focus-visible + label { outline: 3px solid var(--mustard); outline-offset: -3px; }
-.protein legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.protein label small { display: block; font-weight: 400; font-size: .78rem; opacity: .85; }
+.seg-3 { grid-template-columns: repeat(3, 1fr); }
+.protein legend, fieldset legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+legend small { font-weight: 400; color: var(--muted); }
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .toggle { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
 .toggle input { width: 22px; height: 22px; accent-color: var(--tomato); margin: 0; cursor: pointer; flex: none; }
@@ -307,7 +343,10 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .cost-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.4); }
 .cost-row strong { font-size: 1.35rem; font-family: var(--font-display); font-weight: 400; }
 .cost small { opacity: .85; font-size: .8rem; }
-.cost-actions { display: grid; gap: 8px; }
+.cost-alt { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: .85rem; opacity: .95; }
+.cost .link-btn { color: #fff; font-size: .85rem; }
+.cost-actions { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+.cost-actions .span-2 { grid-column: 1 / -1; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
   border-radius: 10px; padding: 10px 16px; font: 700 .95rem var(--font-body); cursor: pointer; text-decoration: none; border: 0;
@@ -370,6 +409,35 @@ details.prices summary::marker { color: var(--tomato); }
 .btn-amazon:active { transform: translateY(2px); box-shadow: none; }
 .disclosure { font-size: .8rem; color: var(--muted); }
 
+/* ---------- Planejamento da cozinha ---------- */
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 640px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tile { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; align-content: start; }
+.tile small { color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.tile b { font: 400 1.4rem/1.15 var(--font-display); color: var(--tomato); }
+.tile span { font-size: .8rem; color: var(--muted); }
+.kitchen-note { font-size: .85rem; color: var(--muted); max-width: 70ch; }
+.h-sub { color: var(--muted); font-size: .7em; }
+.qtd { font-weight: 700; color: var(--tomato); white-space: nowrap; }
+
+/* ---------- Barra fixa no celular (custo + compartilhar) ---------- */
+.mobile-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 16px calc(env(safe-area-inset-bottom, 0px) + 10px);
+  background: var(--tomato); color: #fff; box-shadow: 0 -6px 20px rgba(0,0,0,.18);
+}
+.mobile-bar .mb-resumo { background: none; border: 0; color: inherit; text-align: left; padding: 0; cursor: pointer; min-width: 0; font: inherit; }
+.mobile-bar b { display: block; font: 400 1.4rem/1 var(--font-display); }
+.mobile-bar small { display: block; font-size: .75rem; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mobile-bar .btn { min-height: 40px; padding: 8px 14px; flex: none; }
+@media (min-width: 860px) { .mobile-bar { display: none !important; } }
+@media (max-width: 859px) {
+  body.barra-visivel { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
+  body.barra-visivel .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 90px); }
+}
+body.cookies-abertos .mobile-bar { display: none !important; }
+
 /* ---------- Preparo e FAQ ---------- */
 .steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
 .steps li { counter-increment: s; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; max-width: 70ch; }
@@ -414,6 +482,25 @@ details.prices summary::marker { color: var(--tomato); }
 .link-btn { background: none; border: 0; padding: 0; font: inherit; color: var(--tomato); text-decoration: underline; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- Impressão: só a lista, o custo e o preparo ---------- */
+@media print {
+  :root { --bg: #fff; --surface: #fff; --ink: #000; --muted: #444; --line: #bbb; color-scheme: light; }
+  body { padding: 0; font-size: 11pt; }
+  .site-header nav, .theme-toggle, .eyebrow, .stepper, .people input[type="range"], .range-scale, .chips, #qtd-help,
+  .people fieldset, .toggle, .lede, details.prices, .cost-actions, .cost-alt button, .list-foot .link-btn, .item input,
+  #utensilios, #faq, #tabela, .cookie-banner, .toast, .mobile-bar, .site-footer .link-btn { display: none !important; }
+  .people-count input { border-bottom: 0; color: #000; }
+  .layout { grid-template-columns: 1fr; gap: 12px; }
+  .panel, .faq details, .table-wrap { border: 1px solid #bbb; box-shadow: none; break-inside: avoid; }
+  .cost { position: static; background: #fff; color: #000; border: 1px solid #bbb; }
+  .cost h2, .cost small { color: #000; opacity: 1; }
+  .cost-row { border-top-color: #bbb; }
+  .item { grid-template-columns: minmax(0, 1fr) auto; }
+  .item-qty b, .steps li::before, .tile b, .qtd { color: #000; }
+  .section { padding-block: 16px 0; }
+  a { color: inherit; text-decoration: none; }
+}
 </style>
 </head>
 <body>
@@ -430,12 +517,18 @@ details.prices summary::marker { color: var(--tomato); }
       </svg>
       Calculadora de Strogonoff
     </a>
-    <nav aria-label="Seções">
-      <a href="#lista">Lista</a>
-      <a href="#utensilios">Utensílios</a>
-      <a href="#tabela">Tabela</a>
-      <a href="#preparo">Preparo</a>
-    </nav>
+    <div class="header-right">
+      <nav aria-label="Seções">
+        <a href="#lista">Lista</a>
+        <a href="#cozinha">Cozinha</a>
+        <a href="#preparo">Preparo</a>
+        <a href="#tabela">Tabela</a>
+      </nav>
+      <button type="button" class="theme-toggle" id="tema" aria-label="Mudar para tema escuro" title="Tema claro ou escuro">
+        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -443,7 +536,7 @@ details.prices summary::marker { color: var(--tomato); }
     <section class="hero" aria-labelledby="titulo">
       <p class="eyebrow">Ferramenta gratuita · 1 a 100 pessoas</p>
       <h1 id="titulo">Calculadora de <span>Strogonoff</span></h1>
-      <p class="lede">Escolha quantas pessoas vão comer e veja na hora quanto comprar de cada ingrediente e quanto vai gastar. Base de 200 g de carne e meia caixinha de creme de leite por pessoa.</p>
+      <p class="lede">Escolha quantas pessoas vão comer e veja na hora quanto comprar de cada ingrediente, quanto vai gastar, que panela usar e quanto tempo leva. Base de 200 g de carne por pessoa, ajustável para porções leves ou fartas. Compartilhe o link e a lista chega pronta.</p>
     </section>
 
     <div class="layout">
@@ -488,6 +581,18 @@ details.prices summary::marker { color: var(--tomato); }
             </div>
           </fieldset>
 
+          <fieldset>
+            <legend>Tamanho da porção <small>(carne ou frango por pessoa)</small></legend>
+            <div class="protein seg-3">
+              <input type="radio" name="porcao" id="po-leve" value="leve">
+              <label for="po-leve">Leve<small>150 g</small></label>
+              <input type="radio" name="porcao" id="po-normal" value="normal" checked>
+              <label for="po-normal">Normal<small>200 g</small></label>
+              <input type="radio" name="porcao" id="po-farta" value="farta">
+              <label for="po-farta">Farta<small>250 g</small></label>
+            </div>
+          </fieldset>
+
           <label class="toggle" for="opcionais">
             <input type="checkbox" id="opcionais" checked>
             <span>Incluir cebola e alho <small>(opcionais, para refogar)</small></span>
@@ -519,6 +624,23 @@ details.prices summary::marker { color: var(--tomato); }
             </details>
           </div>
         </section>
+
+        <!-- ===================== PLANEJAMENTO DA COZINHA ===================== -->
+        <section class="section" id="cozinha" aria-labelledby="h-cozinha">
+          <div class="section-head">
+            <h2 id="h-cozinha">Na cozinha</h2>
+            <p>Estimativas <span data-pessoas-txt>para 10 pessoas</span></p>
+          </div>
+          <div class="panel" style="display: grid; gap: 12px;">
+            <div class="tiles" aria-live="polite">
+              <div class="tile"><small>Panela</small><b class="num" id="cz-panela">7 L</b><span id="cz-panela-nota">uma panela</span></div>
+              <div class="tile"><small>Dourar em</small><b class="num" id="cz-levas">4 levas</b><span id="cz-levas-nota">de até 500 g de carne</span></div>
+              <div class="tile"><small>Tempo total</small><b class="num" id="cz-tempo">1 h 10 min</b><span>uma pessoa cozinhando</span></div>
+              <div class="tile"><small>Arroz</small><b class="num" id="cz-arroz">5 xícaras</b><span id="cz-arroz-nota">800 g de arroz cru</span></div>
+            </div>
+            <p class="kitchen-note">Conta meio litro de strogonoff por pessoa com folga para mexer, levas de 500 g para a carne dourar sem soltar água e xícaras de 180 g na panela de arroz. Para grupos grandes, duas panelas e duas pessoas dourando a carne cortam o tempo pela metade.</p>
+          </div>
+        </section>
       </div>
 
       <!-- ===================== CUSTO ESTIMADO ===================== -->
@@ -536,10 +658,19 @@ details.prices summary::marker { color: var(--tomato); }
           <span>Só o que vai na panela</span>
           <strong class="num" id="custo-embalagens">R$ 0,00</strong>
         </div>
+        <div class="cost-alt">
+          <span class="num" id="alt-texto">Com frango: R$ 0,00</span>
+          <button type="button" class="link-btn" id="alt-trocar" data-proteina="frango">Trocar para frango</button>
+        </div>
         <small>O total é o que sai do caixa comprando embalagens inteiras, já escolhendo os tamanhos mais econômicos. Por isso o custo por pessoa cai em grupos maiores: temperos são divididos por mais gente e embalagens grandes saem mais baratas por kg.</small>
         <div class="cost-actions">
-          <button type="button" class="btn btn-light" id="copiar">Copiar lista</button>
-          <a class="btn btn-ghost" id="whatsapp" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+          <button type="button" class="btn btn-light span-2" id="compartilhar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+            Compartilhar lista e link
+          </button>
+          <button type="button" class="btn btn-ghost" id="copiar">Copiar lista</button>
+          <button type="button" class="btn btn-ghost" id="imprimir">Imprimir</button>
+          <a class="btn btn-ghost span-2" id="whatsapp" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
         </div>
       </aside>
     </div>
@@ -666,14 +797,14 @@ details.prices summary::marker { color: var(--tomato); }
 
     <!-- ===================== MODO DE PREPARO ===================== -->
     <section class="section" id="preparo" aria-labelledby="h-preparo">
-      <h2 id="h-preparo">Como fazer o strogonoff</h2>
+      <h2 id="h-preparo">Como fazer o strogonoff <span class="h-sub" data-pessoas-txt>para 10 pessoas</span></h2>
       <ol class="steps">
-        <li id="passo-1">Corte a carne ou o frango em tiras finas e tempere com sal e pimenta.</li>
-        <li id="passo-2">Doure em panela bem quente, em levas pequenas, para a carne fritar em vez de cozinhar na própria água.</li>
-        <li id="passo-3">Se for usar cebola e alho, refogue os dois na mesma panela até murcharem e devolva a carne.</li>
-        <li id="passo-4">Junte o champignon, o molho de tomate (ou ketchup) e a mostarda. Cozinhe por 5 minutos.</li>
-        <li id="passo-5">Desligue o fogo e misture o creme de leite. Não deixe ferver, ou ele talha.</li>
-        <li id="passo-6">Sirva com arroz branco e a batata palha por cima, na hora de comer.</li>
+        <li id="passo-1"><span>Corte <span class="qtd" data-receita="proteina">2 kg de carne</span> em tiras finas e tempere com sal e pimenta.</span></li>
+        <li id="passo-2"><span>Doure em panela bem quente, em levas pequenas (<span class="qtd" id="passo-levas">4 levas</span>), para a carne fritar em vez de cozinhar na própria água.</span></li>
+        <li id="passo-3"><span>Se for usar cebola e alho<span id="receita-opcionais"> (<span class="qtd" data-receita="cebola">300 g de cebola</span> e <span class="qtd" data-receita="alho">30 g de alho</span>)</span>, refogue os dois na mesma panela até murcharem e devolva a carne.</span></li>
+        <li id="passo-4"><span>Junte <span class="qtd" data-receita="champ">500 g de champignon</span>, <span class="qtd" data-receita="molho">260 g de molho de tomate (ou ketchup)</span> e <span class="qtd" data-receita="mostarda">100 g de mostarda</span>. Cozinhe por 5 minutos.</span></li>
+        <li id="passo-5"><span>Desligue o fogo e misture <span class="qtd" data-receita="creme">1 kg de creme de leite</span>. Não deixe ferver, ou ele talha.</span></li>
+        <li id="passo-6"><span>Cozinhe <span class="qtd" data-receita="arroz">800 g de arroz</span> e sirva com <span class="qtd" data-receita="batata">500 g de batata palha</span> por cima, na hora de comer.</span></li>
       </ol>
     </section>
 
@@ -738,6 +869,14 @@ details.prices summary::marker { color: var(--tomato); }
           <summary>Dá para congelar strogonoff?</summary>
           <p>Sim. Congele sem a batata palha e sem o arroz, em pote bem fechado, por até 3 meses. Ao reaquecer, mexa bem, porque o creme de leite pode separar um pouco.</p>
         </details>
+        <details>
+          <summary>Que tamanho de panela usar para strogonoff para muita gente?</summary>
+          <p>Conte cerca de meio litro por pessoa, já com folga para mexer. Para 10 pessoas, uma panela de 7 litros; para 30, uma de 20 litros ou duas de 10. A calculadora sugere o tamanho da panela, quantas levas de carne dourar e o tempo de preparo para qualquer número de pessoas.</p>
+        </details>
+        <details>
+          <summary>Quando usar 150 g ou 250 g de carne por pessoa no strogonoff?</summary>
+          <p>Use 150 g (porção leve) quando houver outros pratos principais, muitas crianças ou o strogonoff for acompanhamento. Use 250 g (porção farta) quando ele for o único prato e o grupo comer bem. Na calculadora, escolha em Tamanho da porção: todos os ingredientes são ajustados junto.</p>
+        </details>
       </div>
     </section>
   </main>
@@ -746,10 +885,19 @@ details.prices summary::marker { color: var(--tomato); }
   <footer class="site-footer">
     <p>Calculadora de Strogonoff · Valores estimados com base em preços médios de supermercado. Confira os preços da sua região.</p>
     <p>Como Associado da Amazon, ganhamos com compras qualificadas.</p>
-    <p>Com sua permissão, este site usa cookies do Google Ads para medir visitas e cliques vindos de anúncios. A calculadora não coleta dados pessoais.</p>
+    <p>Com sua permissão, este site usa cookies do Google Ads para medir visitas e cliques vindos de anúncios. A calculadora não coleta dados pessoais; suas escolhas, preços e tema ficam só no seu navegador.</p>
     <p><a href="/privacidade.html">Política de Privacidade e Cookies</a> · <button type="button" class="link-btn" id="cookie-prefs">Preferências de cookies</button></p>
     <p>Atualizado em <time datetime="2026-10-13">13 de outubro de 2026</time>.</p>
   </footer>
+</div>
+
+<!-- Barra fixa no celular: aparece quando o cartão de custo sai da tela -->
+<div class="mobile-bar" id="mobile-bar" hidden>
+  <button type="button" class="mb-resumo" id="mb-ver" aria-label="Ver o custo estimado">
+    <b class="num" id="mb-total">R$ 0,00</b>
+    <small class="num" id="mb-legenda">10 pessoas · carne</small>
+  </button>
+  <button type="button" class="btn btn-light" id="mb-compartilhar">Compartilhar</button>
 </div>
 
 <div class="toast" id="toast" role="status" hidden></div>
@@ -769,7 +917,7 @@ details.prices summary::marker { color: var(--tomato); }
    CONFIGURAÇÃO
    ----------------------------------------------------------
    base:      gramas fixas por panela (temperos não dobram com o grupo)
-   porPessoa: gramas a mais por pessoa
+   porPessoa: gramas a mais por pessoa (na porção normal)
    preco:     preço médio em R$ por kg na embalagem padrão (editável)
    embs:      embalagens à venda. fator = preço por kg relativo à padrão
               (0.85 = 15% mais barato por kg). Sem embs = a granel.
@@ -797,15 +945,39 @@ const INGREDIENTES = [
   { id: 'alho',     nome: 'Alho',                       base: 10,  porPessoa: 2,  preco: 35.00,
     embs: [{ g: 50, nome: 'cabeça (~50 g)', fator: 1 }], opcional: true }
 ];
+// Nomes curtos usados no modo de preparo ("2 kg de carne")
+const NOMES_RECEITA = {
+  carne: 'carne', frango: 'frango', creme: 'creme de leite', champ: 'champignon',
+  molho: 'molho de tomate (ou ketchup)', mostarda: 'mostarda', arroz: 'arroz', batata: 'batata palha',
+  cebola: 'cebola', alho: 'alho'
+};
 const MIN = 1, MAX = 100;
-const STORAGE_KEY = 'calc-strogonoff-precos-v1';
+const STORAGE_KEY = 'calc-strogonoff-precos-v1';    // preços editados
+const ESCOLHAS_KEY = 'calc-strogonoff-escolhas-v1'; // últimas escolhas (pessoas, proteína, porção, opcionais)
+
+// Tamanho da porção: multiplica a quantidade por pessoa de todos os ingredientes
+const PORCOES = {
+  leve:   { fator: 0.75, rotulo: 'leve (150 g de carne)' },
+  normal: { fator: 1,    rotulo: 'normal (200 g de carne)' },
+  farta:  { fator: 1.25, rotulo: 'farta (250 g de carne)' }
+};
+const PROTEINAS = { carne: 'carne', frango: 'frango' };
+const PADRAO = { pessoas: 10, proteina: 'carne', porcao: 'normal', opcionais: true };
+
+// Planejamento da cozinha (estimativas)
+const LITROS_POR_PESSOA = 0.55;   // ~380 ml de prato pronto por pessoa + folga para mexer
+const PANELAS_LITROS = [2, 3, 4, 5, 7, 10, 12, 15, 20, 25, 30];
+const PANELA_GRANDE = 15;         // acima de 30 L, divide em panelas de 15 L
+const GRAMAS_POR_LEVA = 500;      // carne que doura por vez numa panela larga sem soltar água
+const GRAMAS_XICARA_ARROZ = 180;  // xícara da panela elétrica de arroz
 
 /* ---------- Estado ---------- */
 const padrao = Object.fromEntries(INGREDIENTES.map(i => [i.id, i.preco]));
 let precos = { ...padrao };
-let pessoas = 10;
-let proteina = 'carne';
-let incluirOpcionais = true;
+let pessoas = PADRAO.pessoas;
+let proteina = PADRAO.proteina;
+let porcao = PADRAO.porcao;
+let incluirOpcionais = PADRAO.opcionais;
 
 // Recupera preços salvos (localStorage pode estar bloqueado: sempre em try/catch)
 try {
@@ -813,22 +985,51 @@ try {
   if (salvo) for (const k in salvo) if (k in precos && salvo[k] > 0) precos[k] = salvo[k];
 } catch (e) { /* segue com os preços padrão */ }
 
+// Estado inicial: parâmetros da URL (link compartilhado) > última visita > padrão
+(function lerEstadoInicial() {
+  let salvo = {};
+  try { salvo = JSON.parse(localStorage.getItem(ESCOLHAS_KEY) || 'null') || {}; } catch (e) {}
+  const url = new URLSearchParams(location.search);
+  const escolher = (chave, valido) => {
+    const daUrl = url.get(chave);
+    if (daUrl !== null && valido(daUrl)) return daUrl;
+    if (chave in salvo && valido(String(salvo[chave]))) return String(salvo[chave]);
+    return null;
+  };
+  const n = escolher('pessoas', v => /^\d+$/.test(v) && +v >= MIN && +v <= MAX);
+  if (n !== null) pessoas = +n;
+  const p = escolher('proteina', v => v in PROTEINAS);
+  if (p !== null) proteina = p;
+  const po = escolher('porcao', v => v in PORCOES);
+  if (po !== null) porcao = po;
+  const op = escolher('opcionais', v => ['0', '1', 'true', 'false'].includes(v));
+  if (op !== null) incluirOpcionais = op === '1' || op === 'true';
+})();
+
 /* ---------- Formatadores ---------- */
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const num1 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
 function formatarPeso(g) {
   return g >= 1000 ? num1.format(g / 1000) + ' kg' : Math.round(g) + ' g';
 }
+function formatarTempo(min) {
+  if (min < 60) return `${min} min`;
+  let h = Math.floor(min / 60), m = Math.round((min % 60) / 5) * 5;
+  if (m === 60) { h += 1; m = 0; }
+  return m ? `${h} h ${m} min` : `${h} h`;
+}
+function plural(n, um, varios) { return `${n} ${n === 1 ? um : varios}`; }
 
 /* ---------- Elementos ---------- */
 const $ = id => document.getElementById(id);
 const elQtd = $('qtd'), elSlider = $('slider'), elLista = $('checklist');
 
-/* ---------- Ingredientes ativos conforme a proteína ---------- */
-function ativos() {
-  return INGREDIENTES.filter(i =>
-    (!i.proteina || i.proteina === proteina) && (!i.opcional || incluirOpcionais));
+/* ---------- Ingredientes ativos conforme a proteína e os opcionais ---------- */
+function ativosPara(prot, opc) {
+  return INGREDIENTES.filter(i => (!i.proteina || i.proteina === prot) && (!i.opcional || opc));
 }
+function ativos() { return ativosPara(proteina, incluirOpcionais); }
+function estado() { return { pessoas, proteina, porcao, opcionais: incluirOpcionais }; }
 
 /* ---------- Monta a lista uma vez; depois só atualiza valores ---------- */
 function montarLista() {
@@ -865,7 +1066,7 @@ function montarPrecos() {
 }
 
 /* ---------- Quantidade necessária ---------- */
-function gramasDe(ing, n) { return ing.base + ing.porPessoa * n; }
+function gramasDe(ing, n, p = porcao) { return ing.base + ing.porPessoa * PORCOES[p].fator * n; }
 
 /* ---------- Combinação de embalagens mais barata que cobre `g` ---------- */
 function melhorCompra(ing, g) {
@@ -895,34 +1096,109 @@ function descreverCompra(ing, g, compra) {
   return sobra >= 1 ? `${partes} · sobra ${formatarPeso(sobra)}` : partes;
 }
 
-/* ---------- Cálculo principal ---------- */
-function calcular() {
-  let totalCompra = 0, totalReceita = 0, pesoTotal = 0;
-
-  for (const ing of ativos()) {
-    const gramas = gramasDe(ing, pessoas);
+/* ---------- Orçamento completo para um estado (sem tocar no DOM) ---------- */
+function orcamento(est) {
+  const r = { itens: [], totalCompra: 0, totalReceita: 0, pesoTotal: 0 };
+  for (const ing of ativosPara(est.proteina, est.opcionais)) {
+    const gramas = gramasDe(ing, est.pessoas, est.porcao);
     const compra = melhorCompra(ing, gramas);
-    totalCompra += compra.custo;
+    r.totalCompra += compra.custo;
     // custo proporcional ao que vai na panela, ao preço das embalagens escolhidas
-    totalReceita += compra.gramas ? compra.custo * gramas / compra.gramas : 0;
-    pesoTotal += gramas;
+    r.totalReceita += compra.gramas ? compra.custo * gramas / compra.gramas : 0;
+    r.pesoTotal += gramas;
+    r.itens.push({ ing, gramas, compra });
+  }
+  return r;
+}
 
+/* ---------- Planejamento da cozinha: panela, levas, tempo e arroz ---------- */
+function planoCozinha(orc) {
+  const litros = pessoas * LITROS_POR_PESSOA;
+  const unica = PANELAS_LITROS.find(l => l >= litros);
+  const panela = unica
+    ? { valor: `${unica} L`, nota: `uma panela (≈ ${num1.format(Math.round(litros * 10) / 10)} L de strogonoff)` }
+    : (n => ({ valor: `${n} × ${PANELA_GRANDE} L`, nota: `${n} panelas (≈ ${Math.round(litros)} L de strogonoff)` }))(Math.ceil(litros / PANELA_GRANDE));
+  const prot = orc.itens.find(i => i.ing.proteina);
+  const carne = prot ? prot.gramas : 0;
+  const levas = Math.max(1, Math.ceil(carne / GRAMAS_POR_LEVA));
+  // ~15 min de base + 6 min por kg para cortar + 7 min por leva para dourar + 12 min de molho e finalização
+  const minutos = Math.round(15 + 6 * carne / 1000 + 7 * levas + 12);
+  const arroz = orc.itens.find(i => i.ing.id === 'arroz');
+  const arrozG = arroz ? arroz.gramas : 0;
+  const xicaras = Math.max(1, Math.ceil(arrozG / GRAMAS_XICARA_ARROZ));
+  return { panela, levas, minutos, xicaras, arrozG };
+}
+
+/* ---------- URL compartilhável e memória das escolhas ---------- */
+function aplicarUrl() {
+  const q = new URLSearchParams();
+  if (pessoas !== PADRAO.pessoas) q.set('pessoas', pessoas);
+  if (proteina !== PADRAO.proteina) q.set('proteina', proteina);
+  if (porcao !== PADRAO.porcao) q.set('porcao', porcao);
+  if (!incluirOpcionais) q.set('opcionais', '0');
+  const busca = q.toString();
+  const nova = location.pathname + (busca ? '?' + busca : '') + location.hash;
+  if (nova !== location.pathname + location.search + location.hash) {
+    try { history.replaceState(null, '', nova); } catch (e) {}
+  }
+  try { localStorage.setItem(ESCOLHAS_KEY, JSON.stringify(estado())); } catch (e) {}
+}
+function urlAtual() { return location.origin + location.pathname + location.search; }
+
+/* ---------- Cálculo principal: atualiza tudo na tela ---------- */
+function calcular() {
+  const orc = orcamento(estado());
+
+  for (const { ing, gramas, compra } of orc.itens) {
     document.querySelector(`[data-qtd="${ing.id}"]`).textContent = formatarPeso(gramas);
     document.querySelector(`[data-custo="${ing.id}"]`).textContent = brl.format(compra.custo);
     document.querySelector(`[data-pack="${ing.id}"]`).textContent = descreverCompra(ing, gramas, compra);
   }
 
-  $('custo-total').textContent = brl.format(totalCompra);
-  $('custo-pessoa').textContent = brl.format(totalCompra / pessoas);
-  $('custo-embalagens').textContent = brl.format(totalReceita);
-  $('custo-legenda').textContent = `para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}`;
-  $('peso-total').textContent = `${formatarPeso(pesoTotal)} de ingredientes no total`;
+  const paraPessoas = `para ${plural(pessoas, 'pessoa', 'pessoas')}`;
+  $('custo-total').textContent = brl.format(orc.totalCompra);
+  $('custo-pessoa').textContent = brl.format(orc.totalCompra / pessoas);
+  $('custo-embalagens').textContent = brl.format(orc.totalReceita);
+  $('custo-legenda').textContent = `${paraPessoas} · porção ${PORCOES[porcao].rotulo}`;
+  $('peso-total').textContent = `${formatarPeso(orc.pesoTotal)} de ingredientes no total`;
 
-  // Preenchimento do slider e estado dos atalhos
+  // Comparativo com a outra proteína
+  const alt = proteina === 'carne' ? 'frango' : 'carne';
+  const orcAlt = orcamento({ ...estado(), proteina: alt });
+  const dif = orcAlt.totalCompra - orc.totalCompra;
+  $('alt-texto').textContent = `Com ${alt}: ${brl.format(orcAlt.totalCompra)}` +
+    (Math.abs(dif) >= 0.005 ? ` (${dif < 0 ? brl.format(-dif) + ' a menos' : brl.format(dif) + ' a mais'})` : '');
+  $('alt-trocar').textContent = `Trocar para ${alt}`;
+  $('alt-trocar').dataset.proteina = alt;
+
+  // Planejamento da cozinha
+  const plano = planoCozinha(orc);
+  $('cz-panela').textContent = plano.panela.valor;
+  $('cz-panela-nota').textContent = plano.panela.nota;
+  $('cz-levas').textContent = plural(plano.levas, 'leva', 'levas');
+  $('cz-levas-nota').textContent = `de até ${formatarPeso(GRAMAS_POR_LEVA)} de ${proteina} para dourar`;
+  $('cz-tempo').textContent = formatarTempo(plano.minutos);
+  $('cz-arroz').textContent = plural(plano.xicaras, 'xícara', 'xícaras');
+  $('cz-arroz-nota').textContent = `${formatarPeso(plano.arrozG)} de arroz cru`;
+  $('passo-levas').textContent = plural(plano.levas, 'leva', 'levas');
+
+  // Modo de preparo com as quantidades desta receita
+  document.querySelectorAll('[data-receita]').forEach(el => {
+    const chave = el.dataset.receita === 'proteina' ? proteina : el.dataset.receita;
+    const it = orc.itens.find(i => i.ing.id === chave);
+    el.textContent = it ? `${formatarPeso(it.gramas)} de ${NOMES_RECEITA[chave]}` : '';
+  });
+  $('receita-opcionais').hidden = !incluirOpcionais;
+  document.querySelectorAll('[data-pessoas-txt]').forEach(el => { el.textContent = paraPessoas; });
+
+  // Controles: preenchimento do slider, atalhos e barra do celular
   elSlider.style.setProperty('--fill', ((pessoas - MIN) / (MAX - MIN) * 100) + '%');
   document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(+c.dataset.n === pessoas)));
+  $('mb-total').textContent = brl.format(orc.totalCompra);
+  $('mb-legenda').textContent = `${plural(pessoas, 'pessoa', 'pessoas')} · ${proteina} · ${brl.format(orc.totalCompra / pessoas)}/pessoa`;
 
-  $('whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(textoLista());
+  $('whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(textoLista(true));
+  aplicarUrl();
 }
 
 /* ---------- Atualiza o número de pessoas a partir de qualquer controle ---------- */
@@ -935,14 +1211,24 @@ function definirPessoas(n, origem) {
   calcular();
 }
 
+function definirProteina(p) {
+  if (!(p in PROTEINAS) || p === proteina) return;
+  proteina = p;
+  $('p-' + p).checked = true;
+  montarLista();
+  calcular();
+}
+
 /* ---------- Texto para copiar/compartilhar ---------- */
-function textoLista() {
+function textoLista(comLink) {
   const linhas = ativos().map(i => {
     const g = gramasDe(i, pessoas);
     const extra = i.embs ? ` (${melhorCompra(i, g).itens.map(it => `${it.n} × ${it.e.nome}`).join(' + ')})` : '';
     return `☐ ${i.nome}: ${formatarPeso(g)}${extra}`;
   });
-  return `🛒 Strogonoff para ${pessoas} ${pessoas === 1 ? 'pessoa' : 'pessoas'}\n\n${linhas.join('\n')}\n\nCusto estimado: ${$('custo-total').textContent} (${$('custo-pessoa').textContent} por pessoa)`;
+  const cabecalho = `🛒 Strogonoff de ${proteina} para ${plural(pessoas, 'pessoa', 'pessoas')} · porção ${porcao}`;
+  const custo = `Custo estimado: ${$('custo-total').textContent} (${$('custo-pessoa').textContent} por pessoa)`;
+  return `${cabecalho}\n\n${linhas.join('\n')}\n\n${custo}` + (comLink ? `\n\nAbra e ajuste: ${urlAtual()}` : '');
 }
 
 function avisar(msg) {
@@ -951,6 +1237,29 @@ function avisar(msg) {
   t.hidden = false;
   clearTimeout(avisar.timer);
   avisar.timer = setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+function copiarTexto(texto, ok) {
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = texto; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); avisar(ok); } catch (e) { avisar('Não foi possível copiar'); }
+    ta.remove();
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(() => avisar(ok), fallback);
+  else fallback();
+}
+
+async function compartilhar() {
+  rastrear('compartilhar');
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: `Strogonoff para ${plural(pessoas, 'pessoa', 'pessoas')}`, text: textoLista(false), url: urlAtual() });
+      return;
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  copiarTexto(textoLista(true), 'Lista e link copiados');
 }
 
 /* ---------- Eventos ---------- */
@@ -972,9 +1281,12 @@ $('opcionais').addEventListener('change', e => {
   calcular();
 });
 
-document.querySelectorAll('input[name="proteina"]').forEach(r => r.addEventListener('change', e => {
-  proteina = e.target.value;
-  montarLista();
+document.querySelectorAll('input[name="proteina"]').forEach(r => r.addEventListener('change', e => definirProteina(e.target.value)));
+$('alt-trocar').addEventListener('click', e => definirProteina(e.currentTarget.dataset.proteina));
+
+document.querySelectorAll('input[name="porcao"]').forEach(r => r.addEventListener('change', e => {
+  porcao = e.target.value;
+  rastrear('porcao', { porcao });
   calcular();
 }));
 
@@ -990,19 +1302,43 @@ $('reset-precos').addEventListener('click', () => {
   avisar('Preços restaurados');
 });
 
-$('copiar').addEventListener('click', () => {
-  const texto = textoLista();
-  const fallback = () => {
-    const ta = document.createElement('textarea');
-    ta.value = texto; document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); avisar('Lista copiada'); } catch (e) { avisar('Não foi possível copiar'); }
-    ta.remove();
-  };
-  if (navigator.clipboard) navigator.clipboard.writeText(texto).then(() => avisar('Lista copiada'), fallback);
-  else fallback();
-});
+$('copiar').addEventListener('click', () => { rastrear('copiar_lista'); copiarTexto(textoLista(false), 'Lista copiada'); });
+$('compartilhar').addEventListener('click', compartilhar);
+$('mb-compartilhar').addEventListener('click', compartilhar);
+$('imprimir').addEventListener('click', () => { rastrear('imprimir'); window.print(); });
+$('mb-ver').addEventListener('click', () => document.querySelector('.cost').scrollIntoView({ behavior: 'smooth', block: 'center' }));
 
-/* ---------- Conversões Google Ads ---------- */
+/* ---------- Barra fixa no celular: aparece quando o cartão de custo sai da tela ---------- */
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(([e]) => {
+    const mostrar = !e.isIntersecting;
+    $('mobile-bar').hidden = !mostrar;
+    document.body.classList.toggle('barra-visivel', mostrar);
+  }, { threshold: 0.15 }).observe(document.querySelector('.cost'));
+}
+
+/* ---------- Tema claro/escuro (TEMA_KEY vem do <head>) ---------- */
+function temaEfetivo() {
+  const fixo = document.documentElement.getAttribute('data-theme');
+  if (fixo === 'dark' || fixo === 'light') return fixo;
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function aplicarTema(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.querySelector('meta[name="theme-color"]').content = t === 'dark' ? '#1b1411' : '#c8452e';
+  $('tema').setAttribute('aria-label', t === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+}
+$('tema').addEventListener('click', () => {
+  const novo = temaEfetivo() === 'dark' ? 'light' : 'dark';
+  aplicarTema(novo);
+  try { localStorage.setItem(TEMA_KEY, novo); } catch (e) {}
+});
+if (temaEfetivo() === 'dark') document.querySelector('meta[name="theme-color"]').content = '#1b1411';
+
+/* ---------- Eventos de uso e conversões do Google Ads ---------- */
+function rastrear(nome, params) {
+  if (typeof gtag === 'function') gtag('event', nome, params || {});
+}
 function converter(sendTo) {
   if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
 }
@@ -1011,22 +1347,34 @@ document.querySelectorAll('a[href*="amazon.com.br"]').forEach(a =>
 
 /* ---------- Consentimento de cookies (CONSENT_KEY vem do <head>) ---------- */
 const banner = $('cookie-banner');
+function mostrarBanner(v) {
+  banner.hidden = !v;
+  document.body.classList.toggle('cookies-abertos', v);
+}
 function decidirCookies(aceito) {
   try { localStorage.setItem(CONSENT_KEY, aceito ? 'aceito' : 'recusado'); } catch (e) {}
   const v = aceito ? 'granted' : 'denied';
   gtag('consent', 'update', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
   gtag('set', 'ads_data_redaction', !aceito);
-  banner.hidden = true;
+  mostrarBanner(false);
 }
 $('cookie-aceitar').addEventListener('click', () => decidirCookies(true));
 $('cookie-recusar').addEventListener('click', () => decidirCookies(false));
-$('cookie-prefs').addEventListener('click', () => { banner.hidden = false; $('cookie-aceitar').focus(); });
-if (consentimento !== 'aceito' && consentimento !== 'recusado') banner.hidden = false;
+$('cookie-prefs').addEventListener('click', () => { mostrarBanner(true); $('cookie-aceitar').focus(); });
+if (consentimento !== 'aceito' && consentimento !== 'recusado') mostrarBanner(true);
+
+/* ---------- Funciona sem internet (PWA): registra o service worker em produção ---------- */
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+}
 
 /* ---------- Início ---------- */
+$('p-' + proteina).checked = true;
+$('po-' + porcao).checked = true;
+$('opcionais').checked = incluirOpcionais;
 montarLista();
 montarPrecos();
-definirPessoas(10);
+definirPessoas(pessoas);
 </script>
 </body>
 </html>
