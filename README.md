@@ -10,16 +10,32 @@ e por pessoa.
 
 - **Número de pessoas** de 1 a 100, por campo numérico, botões −/+, controle
   deslizante ou atalhos (Casal, Família, Almoço, Festa, Evento).
-- **Proteína**: carne bovina ou frango.
+- **Proteína**: carne bovina ou frango, com comparativo de quanto custaria com a
+  outra e um botão para trocar.
+- **Tamanho da porção**: leve (150 g), normal (200 g) ou farta (250 g) de carne
+  por pessoa; todos os ingredientes escalam junto.
 - **Opcionais**: cebola e alho podem entrar ou sair da lista.
 - **Lista de compras** com as embalagens a comprar. O cálculo escolhe a
   combinação de embalagens mais barata que cobre a quantidade necessária e
   mostra quanto vai sobrar.
 - **Custo estimado** total e por pessoa, com preços por kg editáveis. Os preços
   editados ficam salvos no navegador (`localStorage`) e podem ser restaurados.
-- **Copiar lista** para a área de transferência, pronta para enviar ou anotar.
-- Receita passo a passo, tabela de quantidades por número de pessoas e
-  perguntas frequentes.
+- **Na cozinha**: tamanho de panela sugerido, quantas levas para dourar a
+  carne, tempo total estimado e xícaras de arroz.
+- **Receita escalada**: o modo de preparo mostra as quantidades do número de
+  pessoas escolhido.
+- **Compartilhar**: botão que usa o compartilhamento nativo do celular (ou
+  copia lista e link), além de copiar lista, enviar no WhatsApp e imprimir
+  (folha de estilo própria para impressão).
+- **Link compartilhável**: as escolhas vão para a URL
+  (`?pessoas=30&proteina=frango&porcao=farta&opcionais=0`) e também ficam
+  salvas no navegador para a próxima visita.
+- **Barra fixa no celular** com o custo total e o botão de compartilhar quando o
+  cartão de custo sai da tela.
+- **Tema claro ou escuro** pelo botão no topo (segue o sistema por padrão).
+- **Funciona sem internet** e pode ser instalado como aplicativo (service worker
+  em `sw.js`).
+- Tabela de quantidades por número de pessoas e perguntas frequentes.
 - Utensílios recomendados com links de afiliado da Amazon.
 
 ## Estrutura
@@ -31,8 +47,9 @@ e por pessoa.
 | `favicon.*`, `favicon-*.png`, `apple-touch-icon.png` | Ícones do site |
 | `og-image.png` | Imagem de compartilhamento em redes sociais |
 | `site.webmanifest` | Manifesto para instalar o site como app |
+| `sw.js` | Service worker: cache dos arquivos para abrir sem internet |
 | `robots.txt`, `sitemap.xml` | Indexação em buscadores |
-| `vercel.json` | Cabeçalhos para a hospedagem na Vercel |
+| `vercel.json` | Cabeçalhos para a hospedagem na Vercel (tipos, cache e segurança) |
 | `docs/ANUNCIAR-NO-GOOGLE.md` | Guia para anunciar o site no Google Ads |
 
 ## Rodar localmente
@@ -60,7 +77,25 @@ Os ingredientes ficam na constante `INGREDIENTES`, no `<script>` do final de
 | `opcional` | Entra só quando "Incluir cebola e alho" está marcado |
 
 Se mudar os preços padrão de forma incompatível com o que os usuários já
-salvaram, troque a versão em `STORAGE_KEY`.
+salvaram, troque a versão em `STORAGE_KEY`. As últimas escolhas ficam em
+`ESCOLHAS_KEY` e o tema em `TEMA_KEY` (no `<head>`).
+
+Os fatores das porções ficam em `PORCOES`. As estimativas da seção "Na cozinha"
+usam as constantes `LITROS_POR_PESSOA`, `PANELAS_LITROS`, `GRAMAS_POR_LEVA` e
+`GRAMAS_XICARA_ARROZ`, logo abaixo dos ingredientes.
+
+## Parâmetros da URL
+
+| Parâmetro | Valores | Padrão |
+|---|---|---|
+| `pessoas` | 1 a 100 | 10 |
+| `proteina` | `carne` ou `frango` | `carne` |
+| `porcao` | `leve`, `normal` ou `farta` | `normal` |
+| `opcionais` | `0` ou `1` | `1` |
+
+Exemplo: <https://calculadoradestrogonoff.com.br/?pessoas=30&proteina=frango>.
+Valores padrão não aparecem na URL. Esses parâmetros também servem para
+anúncios que levam direto a um cenário (festa de 30, por exemplo).
 
 ## Afiliados e anúncios
 
@@ -81,3 +116,8 @@ salvaram, troque a versão em `STORAGE_KEY`.
 O site é estático e hospedado na Vercel; basta publicar os arquivos da raiz do
 repositório. Ao alterar o conteúdo, atualize a data em
 `sitemap.xml` (`<lastmod>`) e no rodapé de `index.html`.
+
+O `sw.js` guarda uma cópia das páginas e dos ícones no navegador do visitante.
+As páginas são buscadas na rede primeiro, então uma nova publicação aparece na
+visita seguinte. Se mudar o nome de algum arquivo em cache, troque `VERSAO` em
+`sw.js` para o cache antigo ser apagado.
