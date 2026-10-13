@@ -213,10 +213,41 @@ Caminho de exibição: `calculadoradestrogonoff.com.br/` **`calculadora`** / **`
 ### Recursos (extensões) — aumentam o anúncio de graça
 - **Sitelinks:** *Lista de Compras* (`/#lista`), *Custo Estimado* (`/#h-custo`),
   *Modo de Preparo* (`/#h-preparo`), *Tabela por Pessoas* (`/#h-tabela`).
-- **Frases de destaque:** `100% grátis` · `Sem cadastro` · `Funciona no celular` ·
-  `Carne ou frango`.
+- **Frases de destaque** (máx. 25 caracteres — veja a seção abaixo).
 - **Snippets estruturados** (cabeçalho *Tipos*): `Almoço de família`, `Festa`,
   `Aniversário`, `Evento`.
+
+### Frases de destaque (callouts)
+
+O Google Ads avisa *"1 campanha não tem frases de destaque"* quando elas não
+foram adicionadas. Cadastre-as **no nível da campanha** para valerem em todos os
+grupos de anúncios:
+
+1. **Campanhas** → abra a campanha de Pesquisa → **Recursos** (ou *Anúncios e
+   recursos → Recursos*).
+2. Clique em **+** → **Frase de destaque**.
+3. Em *Adicionar a*, escolha **Campanha** e selecione a campanha.
+4. Cole as frases abaixo (uma por campo, mínimo 4, ideal 8 ou mais) e **Salvar**.
+
+| # | Frase (máx. 25 caracteres) | Caracteres |
+|---|----------------------------|-----------:|
+| 1 | 100% grátis                | 11 |
+| 2 | Sem cadastro               | 12 |
+| 3 | Sem instalar app           | 16 |
+| 4 | Funciona no celular        | 19 |
+| 5 | Carne ou frango            | 15 |
+| 6 | De 1 a 100 pessoas         | 18 |
+| 7 | Resultado na hora          | 17 |
+| 8 | Lista de compras pronta    | 23 |
+| 9 | Custo total e por pessoa   | 24 |
+| 10 | Copie a lista em 1 clique | 25 |
+| 11 | Receita passo a passo     | 21 |
+| 12 | Preços editáveis          | 16 |
+| 13 | Evite desperdício         | 17 |
+
+Regras para não serem reprovadas: sem pontuação no final, sem ponto de
+exclamação, sem repetir frases e sem prometer o que o site não tem (por exemplo,
+"atendimento 24h" ou "frete grátis"). A aprovação costuma sair em até 1 dia útil.
 
 ---
 
