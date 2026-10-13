@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- Google tag (gtag.js) - Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18505768191"></script>
+<!-- Google tag (gtag.js) - Google Ads
+     Consent Mode v2: tudo negado por padrão (LGPD). O banner de cookies, no fim
+     do <body>, libera os cookies quando o visitante clica em "Aceitar". -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  var CONSENT_KEY = 'strogonoff-cookies-v1';
+  var consentimento = null;
+  try { consentimento = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+  var liberado = consentimento === 'aceito' ? 'granted' : 'denied';
+  gtag('consent', 'default', {
+    ad_storage: liberado, ad_user_data: liberado, ad_personalization: liberado,
+    analytics_storage: liberado, wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', liberado === 'denied');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18505768191"></script>
+<script>
   gtag('js', new Date());
   gtag('config', 'AW-18505768191');
 </script>
@@ -384,6 +397,22 @@ details.prices summary::marker { color: var(--tomato); }
   box-shadow: 0 6px 20px rgba(0,0,0,.25); z-index: 10;
 }
 
+/* Banner de cookies */
+.cookie-banner {
+  position: fixed; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 20;
+  max-width: 560px; margin: 0 auto; background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18); display: grid; gap: 12px; font-size: .9rem;
+}
+.cookie-banner h2 { font-size: 1.05rem; }
+.cookie-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cookie-actions .btn { flex: 1 1 140px; }
+.btn-primary { background: var(--tomato); color: var(--surface); }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn-outline:hover { border-color: var(--tomato); color: var(--tomato); }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; color: var(--tomato); text-decoration: underline; cursor: pointer; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -717,12 +746,23 @@ details.prices summary::marker { color: var(--tomato); }
   <footer class="site-footer">
     <p>Calculadora de Strogonoff · Valores estimados com base em preços médios de supermercado. Confira os preços da sua região.</p>
     <p>Como Associado da Amazon, ganhamos com compras qualificadas.</p>
-    <p>Este site usa cookies do Google Ads para medir visitas e cliques vindos de anúncios. Nenhum dado pessoal é coletado pela calculadora.</p>
-    <p>Atualizado em <time datetime="2026-10-08">8 de outubro de 2026</time>.</p>
+    <p>Com sua permissão, este site usa cookies do Google Ads para medir visitas e cliques vindos de anúncios. A calculadora não coleta dados pessoais.</p>
+    <p><a href="/privacidade.html">Política de Privacidade e Cookies</a> · <button type="button" class="link-btn" id="cookie-prefs">Preferências de cookies</button></p>
+    <p>Atualizado em <time datetime="2026-10-13">13 de outubro de 2026</time>.</p>
   </footer>
 </div>
 
 <div class="toast" id="toast" role="status" hidden></div>
+
+<!-- ===================== BANNER DE COOKIES (LGPD) ===================== -->
+<section class="cookie-banner" id="cookie-banner" role="region" aria-labelledby="cookie-titulo" hidden>
+  <h2 id="cookie-titulo">Cookies</h2>
+  <p>Usamos cookies do Google Ads para medir visitas e cliques vindos de anúncios. Eles só são ativados se você aceitar. A calculadora funciona do mesmo jeito nos dois casos. <a href="/privacidade.html">Saiba mais</a>.</p>
+  <div class="cookie-actions">
+    <button type="button" class="btn btn-outline" id="cookie-recusar">Recusar</button>
+    <button type="button" class="btn btn-primary" id="cookie-aceitar">Aceitar</button>
+  </div>
+</section>
 
 <script>
 /* ==========================================================
@@ -968,6 +1008,20 @@ function converter(sendTo) {
 }
 document.querySelectorAll('a[href*="amazon.com.br"]').forEach(a =>
   a.addEventListener('click', () => converter('AW-18505768191/mlruCLmXrpgdEPyT5ukD')));
+
+/* ---------- Consentimento de cookies (CONSENT_KEY vem do <head>) ---------- */
+const banner = $('cookie-banner');
+function decidirCookies(aceito) {
+  try { localStorage.setItem(CONSENT_KEY, aceito ? 'aceito' : 'recusado'); } catch (e) {}
+  const v = aceito ? 'granted' : 'denied';
+  gtag('consent', 'update', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+  gtag('set', 'ads_data_redaction', !aceito);
+  banner.hidden = true;
+}
+$('cookie-aceitar').addEventListener('click', () => decidirCookies(true));
+$('cookie-recusar').addEventListener('click', () => decidirCookies(false));
+$('cookie-prefs').addEventListener('click', () => { banner.hidden = false; $('cookie-aceitar').focus(); });
+if (consentimento !== 'aceito' && consentimento !== 'recusado') banner.hidden = false;
 
 /* ---------- Início ---------- */
 montarLista();

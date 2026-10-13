@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Política de Privacidade e Cookies - Calculadora de Strogonoff</title>
+<meta name="description" content="Como a Calculadora de Strogonoff trata dados, cookies do Google Ads e links de afiliado da Amazon, conforme a LGPD.">
+<link rel="canonical" href="https://calculadoradestrogonoff.com.br/privacidade.html">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#c8452e">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+
+<style>
+/* Mesmas cores e fontes do index.html */
+:root {
+  --bg: #fbf5ec; --surface: #ffffff; --ink: #2c1b14; --muted: #7b6558; --line: #eadccb;
+  --tomato: #c8452e; --mustard: #d99a1b;
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1411; --surface: #261c17; --ink: #f6ebe0; --muted: #b8a393; --line: #3b2c24;
+    --tomato: #ea7a62; --mustard: #f0b947; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1411; --surface: #261c17; --ink: #f6ebe0; --muted: #b8a393; --line: #3b2c24;
+  --tomato: #ea7a62; --mustard: #f0b947; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+  padding: env(safe-area-inset-top, 0px) 16px env(safe-area-inset-bottom, 0px);
+}
+h1, h2 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; text-wrap: balance; }
+h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 8px 0 4px; }
+h2 { font-size: 1.3rem; margin: 32px 0 8px; }
+p, ul { margin: 0 0 12px; }
+li { margin-bottom: 6px; }
+a { color: var(--tomato); }
+:focus-visible { outline: 3px solid var(--mustard); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 720px; margin: 0 auto; }
+.site-header { padding-block: 18px; }
+.brand { color: var(--ink); text-decoration: none; font-family: var(--font-display); font-size: 1.15rem; }
+.muted { color: var(--muted); font-size: .9rem; }
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+thead th { border-top: 0; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.cookie-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; flex: 1 1 160px;
+  border-radius: 10px; padding: 10px 16px; font: 700 .95rem var(--font-body); cursor: pointer; }
+.btn-primary { background: var(--tomato); color: var(--surface); border: 0; }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn-outline:hover { border-color: var(--tomato); color: var(--tomato); }
+.site-footer { margin-top: 40px; padding-block: 24px 32px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a class="brand" href="/">← Calculadora de Strogonoff</a>
+  </header>
+
+  <main>
+    <h1>Política de Privacidade e Cookies</h1>
+    <p class="muted">Última atualização: <time datetime="2026-10-13">13 de outubro de 2026</time></p>
+
+    <p>Esta política explica quais dados a Calculadora de Strogonoff
+      (<a href="https://calculadoradestrogonoff.com.br/">calculadoradestrogonoff.com.br</a>)
+      trata, para quê e quais são seus direitos, conforme a Lei Geral de Proteção de Dados
+      (LGPD, Lei nº 13.709/2018).</p>
+
+    <h2>Resumo</h2>
+    <ul>
+      <li>A calculadora não pede cadastro, nome, e-mail nem telefone.</li>
+      <li>Os números que você digita (pessoas, preços) ficam só no seu navegador.</li>
+      <li>Cookies do Google Ads só são ativados se você clicar em <strong>Aceitar</strong> no aviso de cookies.</li>
+      <li>Você pode mudar sua escolha a qualquer momento.</li>
+    </ul>
+
+    <h2>Dados que ficam no seu navegador</h2>
+    <p>O site guarda no armazenamento local do navegador (<code>localStorage</code>), sem enviar para nenhum servidor:</p>
+    <ul>
+      <li><strong>Preços editados:</strong> os preços por kg que você alterar, para que continuem lá na próxima visita. O botão “Restaurar preços” apaga esses dados.</li>
+      <li><strong>Sua escolha sobre cookies:</strong> se você aceitou ou recusou, para não perguntar de novo a cada visita.</li>
+    </ul>
+    <p>Você pode apagar esses dados limpando os dados do site nas configurações do navegador.</p>
+
+    <h2>Cookies do Google Ads</h2>
+    <p>Usamos a tag do Google Ads para saber quantas visitas vieram de anúncios e quantas pessoas
+      copiaram a lista ou clicaram nos links da Amazon. Isso nos ajuda a decidir se vale a pena continuar anunciando.</p>
+    <p>Esses cookies só são gravados com o seu consentimento (art. 7º, I, da LGPD). Se você recusar,
+      o Google recebe apenas sinais sem cookies e sem identificadores de publicidade
+      (o chamado “Modo de consentimento”), e o site funciona normalmente.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cookie</th><th>Empresa</th><th>Finalidade</th><th>Duração</th></tr></thead>
+        <tbody>
+          <tr><td><code>_gcl_au</code>, <code>_gcl_aw</code></td><td>Google</td><td>Ligar uma visita ou clique ao anúncio que a originou (medição de conversões)</td><td>Até 90 dias</td></tr>
+          <tr><td><code>IDE</code>, <code>test_cookie</code></td><td>Google (doubleclick.net)</td><td>Medição e veiculação de anúncios</td><td>Até 13 meses</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>O Google trata esses dados conforme a
+      <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" rel="noopener">Política de Privacidade do Google</a>
+      e explica o uso em <a href="https://policies.google.com/technologies/partner-sites?hl=pt-BR" target="_blank" rel="noopener">Como o Google usa dados de sites parceiros</a>.
+      Você também pode ajustar anúncios personalizados em
+      <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Minha Central de Anúncios</a>.</p>
+    <p><strong>Sua escolha:</strong> <span id="cookie-status" role="status">você ainda não escolheu.</span></p>
+    <p class="cookie-actions">
+      <button type="button" class="btn btn-outline" id="cookie-recusar">Recusar cookies</button>
+      <button type="button" class="btn btn-primary" id="cookie-aceitar">Aceitar cookies</button>
+    </p>
+
+    <h2>Fontes do Google</h2>
+    <p>As fontes do site são carregadas do Google Fonts. Para entregar os arquivos, o Google
+      recebe o endereço IP e dados técnicos do navegador, como acontece com qualquer arquivo
+      baixado da internet. O Google Fonts não grava cookies.</p>
+
+    <h2>Links de afiliado da Amazon</h2>
+    <p>Somos participantes do Programa de Associados da Amazon. Os links de produtos levam ao
+      site da Amazon com nosso código de associado. Ao clicar, você sai deste site, e a Amazon passa
+      a tratar seus dados conforme a
+      <a href="https://www.amazon.com.br/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank" rel="noopener">política de privacidade da Amazon</a>.
+      Não recebemos dados seus da Amazon, só o total de vendas qualificadas.</p>
+
+    <h2>Hospedagem</h2>
+    <p>O site é hospedado na Vercel, que registra dados técnicos de acesso (como endereço IP e
+      navegador) para segurança e funcionamento do serviço, conforme a
+      <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">política de privacidade da Vercel</a>.</p>
+
+    <h2>Seus direitos</h2>
+    <p>Pela LGPD, você pode pedir confirmação de tratamento, acesso, correção, anonimização ou
+      eliminação de dados, informações sobre compartilhamento e revogar o consentimento a
+      qualquer momento (art. 18). Como não guardamos dados pessoais em servidores próprios, a
+      forma mais rápida de exercer esses direitos é recusar os cookies acima e limpar os dados
+      do site no seu navegador. Para os dados tratados pelo Google, pela Amazon e pela Vercel,
+      use os canais dessas empresas indicados acima.</p>
+
+    <h2>Contato</h2>
+    <p>Dúvidas sobre esta política: <a href="mailto:contato@calculadoradestrogonoff.com.br">contato@calculadoradestrogonoff.com.br</a>.</p>
+
+    <h2>Mudanças nesta política</h2>
+    <p>Se mudarmos a forma de tratar dados, atualizaremos esta página e a data no topo.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p><a href="/">Voltar para a calculadora</a></p>
+  </footer>
+</div>
+
+<script>
+// Mesma chave de consentimento do index.html. Esta página não carrega a tag do
+// Google: a escolha fica gravada e vale a partir da próxima visita à calculadora.
+var CONSENT_KEY = 'strogonoff-cookies-v1';
+var elEscolha = document.getElementById('cookie-status');
+function mostrarEscolha() {
+  var v = null;
+  try { v = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+  elEscolha.textContent = v === 'aceito' ? 'cookies aceitos.'
+    : v === 'recusado' ? 'cookies recusados.' : 'você ainda não escolheu.';
+}
+function escolher(valor) {
+  try { localStorage.setItem(CONSENT_KEY, valor); } catch (e) {}
+  mostrarEscolha();
+}
+document.getElementById('cookie-aceitar').addEventListener('click', function () { escolher('aceito'); });
+document.getElementById('cookie-recusar').addEventListener('click', function () { escolher('recusado'); });
+mostrarEscolha();
+</script>
+</body>
+</html>

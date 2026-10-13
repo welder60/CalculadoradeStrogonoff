@@ -254,7 +254,7 @@ Métricas de referência para começar (ajuste com seus dados):
 - [x] `SEUTAG-20` trocado pelo ID real da Amazon (`calcstrogonof-20`)
 - [ ] Conta Google Ads criada no **modo Especialista**, BRL e fuso de Brasília
 - [ ] Tag do Google no `<head>` e conversões `copiar_lista` / `clique_amazon` gravando
-- [ ] Aviso de cookies/privacidade no site
+- [x] Aviso de cookies/privacidade no site (banner com consentimento + `privacidade.html`)
 - [ ] Campanha só de **Pesquisa**, Brasil, Português, sem Display/Parceiros
 - [ ] 3 grupos de anúncios + palavras negativas
 - [ ] Anúncios responsivos com sitelinks e frases de destaque
